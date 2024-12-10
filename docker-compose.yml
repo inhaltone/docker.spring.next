@@ -1,0 +1,33 @@
+services:
+  dock-spring:
+    build:
+      context: ./dock-spring
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - docker-net
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_DATASOURCE_DRIVER_CLASSNAME=${SPRING_DATASOURCE_DRIVER_CLASSNAME}
+
+  dock-next:
+    build:
+      context: ./dock-next
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - docker-net
+    volumes:
+      - ./dock-next:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+networks:
+  docker-net:
+    driver: bridge
