@@ -13,20 +13,22 @@ import {Input} from "@/components/ui/input"
 import {useActionState, useEffect} from "react";
 import {addEngineerAction} from "@/actions/add-engineer-action";
 import {FormStatus} from "@/types/form";
+import {ToastAction} from "@/components/ui/toast";
+import {useToast} from "@/hooks/use-toast";
 
 export function AddEngineer() {
-
+    const { toast } = useToast()
     const [actionState, formAction, isPending] = useActionState(addEngineerAction, null);
 
     useEffect(() => {
         if (actionState?.status === FormStatus.SUCCESS) {
-            // toast({
-            //     title: `New engineer added: ${actionState.firstName}`,
-            //     description: new Date().toString(),
-            //     action: (
-            //         <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-            //     ),
-            // })
+            toast({
+                title: `New engineer added: ${actionState.firstName}`,
+                description: new Date().toString(),
+                action: (
+                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+                ),
+            })
         }
     }, [actionState]);
 

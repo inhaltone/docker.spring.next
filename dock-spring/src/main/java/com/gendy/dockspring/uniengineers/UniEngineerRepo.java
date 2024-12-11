@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface UniEngineerRepo extends CrudRepository<UniEngineer, String> {
-    Optional<UniEngineer> findByEmail(String email);
 
     Optional<UniEngineer> findById(String id);
 

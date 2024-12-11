@@ -1,5 +1,5 @@
 export default class ApiEndpoints {
-    private static BASE_URL = `${process.env.BASE_URL}/api`;
+    private static BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
     // private static BASE_URL = "http://dns-dock-spring-1:8080/api";
 
     public static GET_ALL_ENGINEERS = ApiEndpoints.BASE_URL + '/get-all-engineers';

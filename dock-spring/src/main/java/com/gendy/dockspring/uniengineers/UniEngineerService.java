@@ -14,11 +14,6 @@ public class UniEngineerService {
     }
 
     @Transactional(readOnly = true)
-    public UniEngineer findEngineerByEmail(final String email) {
-        return uniEngineerRepo.findByEmail(email).orElse(null);
-    }
-
-    @Transactional(readOnly = true)
     public UniEngineer findEngineerById(final String id) {
         return uniEngineerRepo.findById(id).orElse(null);
     }

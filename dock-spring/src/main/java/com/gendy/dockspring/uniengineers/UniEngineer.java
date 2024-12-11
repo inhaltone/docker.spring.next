@@ -19,7 +19,5 @@ public class UniEngineer {
 
     private String email;
 
-    public UniEngineer(String id, String firstName, String email) {}
 
-    public UniEngineer() {}
 }

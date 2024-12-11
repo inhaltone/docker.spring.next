@@ -39,7 +39,6 @@ export default class EngineerService {
 
     static async delete(engineerId: number) {
         console.log('DELETE METHOD:', ApiEndpoints.DELETE_ENGINEER)
-        console.log('ENV', process.env.TONY)
         try {
             const response = await fetch(ApiEndpoints.DELETE_ENGINEER, {
                 method: 'POST',
@@ -47,7 +46,9 @@ export default class EngineerService {
                     'Authorization': getBasicAuth(),
                     'Content-Type': 'application/json',
                 },
-                body: engineerId.toString()
+                body: JSON.stringify({
+                    uniEngineerId: engineerId
+                })
             });
             console.log(response)
         } catch (e) {
