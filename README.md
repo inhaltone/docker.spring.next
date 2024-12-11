@@ -47,13 +47,13 @@ cd <repo-directory>
 3. Run the following command to start the services (dock-spring, dock-next, and PostgreSQL containers):
 
 ```bash
-   docker-compose up --build
+$ docker-compose up
 ```
 
 ### Kill docker container
 
 ```bash
-docker-compose down
+$ docker-compose down
 ```
 
 # PostgreSQL Docker Setup
@@ -71,7 +71,7 @@ This guide will walk you through the steps to pull the official PostgreSQL Docke
 To get the latest PostgreSQL Docker image, run the following command:
 
 ```bash
-docker pull postgres:latest
+$ docker pull postgres:latest
 ```
 
 ### 2. Create and Run a PostgreSQL Container
@@ -87,9 +87,9 @@ docker run --name <postgres-container-name> \
   -d postgres:latest
 
 ```
-#### Enter the default db name of postgress and the create a db
+#### Enter the default db name of postgres and the create a db
 
 ```bash
-psql -h localhost -p 5433 -U admin -d postgres
+psql -h localhost -p 5433 -U <user> -d <db_name>
 ```
 

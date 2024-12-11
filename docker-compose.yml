@@ -25,8 +25,8 @@ services:
       - ./dock-next:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
-    command: npm run dev
+      - NODE_ENV=${NODE_ENV}
+    command: ${NPM_COMMAND}
 
 networks:
   docker-net:
