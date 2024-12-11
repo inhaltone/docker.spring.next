@@ -34,9 +34,6 @@ export default class EngineerService {
                 },
                 body: JSON.stringify(params)
             });
-            if (!response.ok) {
-                throw 'Bad Response!!!!'
-            }
             return await response.json();
         } catch (e) {
             console.error(e);

@@ -1,6 +1,7 @@
 package com.gendy.dockspring;
 
 import com.gendy.dockspring.uniengineers.UniEngineer;
+import com.gendy.dockspring.uniengineers.UniEngineerAlreadyExistsException;
 import com.gendy.dockspring.uniengineers.UniEngineerDTO;
 import com.gendy.dockspring.uniengineers.UniEngineerService;
 import org.springframework.data.domain.Page;
@@ -42,7 +43,8 @@ public class ApiController {
         Optional<UniEngineer> existingEngineer = uniEngineerService.findEngineerByEmail(engineer.getEmail());
 
         if (existingEngineer.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists!");
+            // TODO: Impl a global exception handler
+            throw new UniEngineerAlreadyExistsException("Oups!! This engine already exists!");
         }
 
         return uniEngineerService.saveEngineer(engineer);

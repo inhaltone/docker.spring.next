@@ -9,10 +9,11 @@ export async function addEngineerAction(prev: SaveEngineerFormState | null, form
     const email = formData.get("email") as string;
 
     try {
-        await EngineerService.saveEngineer({
+        const response = await EngineerService.saveEngineer({
             firstName: firstName,
             email: email
         })
+        console.log('response::', response);
     } catch (e) {
     console.error('SAVE EXCEPTION::::', e)
     }
