@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class UniEngineerService {
     private final UniEngineerRepo uniEngineerRepo;
@@ -16,6 +18,10 @@ public class UniEngineerService {
     @Transactional(readOnly = true)
     public UniEngineer findEngineerById(final String id) {
         return uniEngineerRepo.findById(id).orElse(null);
+    }
+
+    public Optional<UniEngineer> findEngineerByEmail(final String email) {
+        return uniEngineerRepo.findByEmail(email);
     }
 
     @Transactional(readOnly = true)

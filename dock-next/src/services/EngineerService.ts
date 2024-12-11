@@ -25,20 +25,26 @@ export default class EngineerService {
     }
 
     static async saveEngineer(params: SaveEngineerParams) {
-        const response = await fetch(ApiEndpoints.SAVE_ENGINEER, {
-            method: 'POST',
-            headers: {
-                'Authorization': getBasicAuth(),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(params)
-        });
-        const result = await response.json();
-        console.log('SAVE', result);
+        try {
+            const response = await fetch(ApiEndpoints.SAVE_ENGINEER, {
+                method: 'POST',
+                headers: {
+                    'Authorization': getBasicAuth(),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(params)
+            });
+            if (!response.ok) {
+                throw 'Bad Response!!!!'
+            }
+            return await response.json();
+        } catch (e) {
+            console.error(e);
+            return Promise.reject();
+        }
     }
 
     static async delete(engineerId: number) {
-        console.log('DELETE METHOD:', ApiEndpoints.DELETE_ENGINEER)
         try {
             const response = await fetch(ApiEndpoints.DELETE_ENGINEER, {
                 method: 'POST',

@@ -12,6 +12,8 @@ public interface UniEngineerRepo extends CrudRepository<UniEngineer, String> {
 
     Optional<UniEngineer> findById(String id);
 
+    Optional<UniEngineer> findByEmail(String email);
+
     Page<UniEngineer> findAll(Pageable pageable);
 
     void deleteById(String id);
