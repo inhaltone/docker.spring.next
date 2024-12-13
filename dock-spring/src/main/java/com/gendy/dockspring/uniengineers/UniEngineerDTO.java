@@ -1,5 +1,10 @@
 package com.gendy.dockspring.uniengineers;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class UniEngineerDTO {
     private Long uniEngineerId;
 
@@ -7,11 +12,4 @@ public class UniEngineerDTO {
         this.uniEngineerId = uniEngineerId;
     }
 
-    public Long getUniEngineerId() {
-        return uniEngineerId;
-    }
-
-    public void setUniEngineerId(Long uniEngineerId) {
-        this.uniEngineerId = uniEngineerId;
-    }
 }

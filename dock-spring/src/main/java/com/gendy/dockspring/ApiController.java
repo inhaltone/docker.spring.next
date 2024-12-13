@@ -4,6 +4,7 @@ import com.gendy.dockspring.uniengineers.UniEngineer;
 import com.gendy.dockspring.uniengineers.UniEngineerAlreadyExistsException;
 import com.gendy.dockspring.uniengineers.UniEngineerDTO;
 import com.gendy.dockspring.uniengineers.UniEngineerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +18,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class ApiController {
     final UniEngineerService uniEngineerService;
 
-    public ApiController(UniEngineerService uniEngineerService) {
-        this.uniEngineerService = uniEngineerService;
-    }
 
     @GetMapping("find-user-by-id")
     public ResponseEntity<UniEngineer> findEngineerById(@RequestParam("id") String id) {
