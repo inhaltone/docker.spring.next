@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 import EngineerService from "@/services/EngineerService";
 import {Badge} from "@/components/ui/badge";
 import {AddEngineer} from "@/components/add-engineer";
@@ -6,24 +6,25 @@ import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Table
 import Link from "next/link";
 import DeleteEngineer from "@/components/delete-engineer";
 import {Card, CardContent} from "@/components/ui/card";
-import {useEffect, useState} from "react";
-import {EngineerModel} from "@/types/engineer";
+// import {useEffect, useState} from "react";
+// import {EngineerModel} from "@/types/engineer";
 import {Skeleton} from "@/components/ui/skeleton";
 
 
-export default function Engineers() {
-    const [engineers, setEngineers] = useState<EngineerModel[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    // const {content} = await EngineerService.getAllEngineersPaged({page: 0, size: 10})
-
-    useEffect(() => {
-        console.log('run')
-        EngineerService.getAllEngineersPaged({page: 0, size: 10})
-            .then((response) => {
-                setEngineers(response.content);
-            })
-            .finally(() => setLoading(false))
-    }, []);
+export default async function Engineers() {
+    // const [engineers, setEngineers] = useState<EngineerModel[]>([]);
+    // const [loading, setLoading] = useState<boolean>(true);
+    const {content} = await EngineerService.getAllEngineersPaged({page: 0, size: 10})
+    const loading = false;
+    console.log('content:::', content);
+    // useEffect(() => {
+    //     console.log('run')
+    //     EngineerService.getAllEngineersPaged({page: 0, size: 10})
+    //         .then((response) => {
+    //             setEngineers(response.content);
+    //         })
+    //         .finally(() => setLoading(false))
+    // }, []);
 
     return (
         <div
@@ -38,7 +39,7 @@ export default function Engineers() {
                                     <Skeleton className="h-4 w-[200px]"/>
                                 </div>
                             </div>)
-                            : engineers.length ? (<Table>
+                            : content ? (<Table>
                                 <TableCaption>A list of team engineers</TableCaption>
                                 <TableHeader>
                                     <TableRow>
@@ -50,7 +51,7 @@ export default function Engineers() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {engineers.map((engineer) => (
+                                    {content.map((engineer) => (
                                         <TableRow key={engineer.id}>
                                             <TableCell className="w-[100px]">
                                                 {engineer.id}

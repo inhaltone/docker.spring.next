@@ -1,7 +1,7 @@
 import ApiEndpoints from "@/constants/ApiEndpoints";
 import {getBasicAuth} from "@/auth/auth";
 import {PageParams} from "@/types/serviceTypes";
-import {EngineerPagedResponse, SaveEngineerParams} from "@/types/engineer";
+import {EngineerModel, EngineerPagedResponse, SaveEngineerParams} from "@/types/engineer";
 
 export default class EngineerService {
 
@@ -59,14 +59,17 @@ export default class EngineerService {
         }
     }
 
-    static async findEngineerById(engineerId: number) {
+    static async findEngineerById(engineerId: string): Promise<EngineerModel> {
+        console.log(typeof window)
+        console.log('endpoint:', `${ApiEndpoints.FIND_ENGINEER_BY_ID}?engineerId=${engineerId}`);
         try {
-            const response = await fetch(`${ApiEndpoints.FIND_ENGINEER_BY_ID}?engineerId${engineerId.toString()}`, {
+            const response = await fetch(`${ApiEndpoints.FIND_ENGINEER_BY_ID}?engineerId=${engineerId}`, {
                 headers: {
                     'Authorization': getBasicAuth(),
                     'Content-Type': 'application/json',
                 },
             })
+            console.log('response', response);
             if (!response.ok) {
                 throw 'Bad Response!!!!'
             }

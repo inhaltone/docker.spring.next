@@ -23,7 +23,7 @@ public class ApiController {
 
 
     @GetMapping("find-user-by-id")
-    public ResponseEntity<UniEngineer> findEngineerById(@RequestParam("id") String id) {
+    public ResponseEntity<UniEngineer> findEngineerById(@RequestParam("engineerId") String id) {
         System.out.println(id);
 
         return new ResponseEntity<>(uniEngineerService.findEngineerById(id), HttpStatus.OK);
