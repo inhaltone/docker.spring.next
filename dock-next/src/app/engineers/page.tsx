@@ -4,27 +4,15 @@ import {Badge} from "@/components/ui/badge";
 import {AddEngineer} from "@/components/add-engineer";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import Link from "next/link";
-import DeleteEngineer from "@/components/delete-engineer";
+// import DeleteEngineer from "@/components/delete-engineer";
 import {Card, CardContent} from "@/components/ui/card";
-// import {useEffect, useState} from "react";
-// import {EngineerModel} from "@/types/engineer";
 import {Skeleton} from "@/components/ui/skeleton";
 
 
 export default async function Engineers() {
-    // const [engineers, setEngineers] = useState<EngineerModel[]>([]);
-    // const [loading, setLoading] = useState<boolean>(true);
     const {content} = await EngineerService.getAllEngineersPaged({page: 0, size: 10})
     const loading = false;
     console.log('content:::', content);
-    // useEffect(() => {
-    //     console.log('run')
-    //     EngineerService.getAllEngineersPaged({page: 0, size: 10})
-    //         .then((response) => {
-    //             setEngineers(response.content);
-    //         })
-    //         .finally(() => setLoading(false))
-    // }, []);
 
     return (
         <div
@@ -70,7 +58,7 @@ export default async function Engineers() {
                                                 </Link>
                                             </TableCell>
                                             <TableCell>
-                                                <DeleteEngineer engineerId={engineer.id}/>
+                                                {/*<DeleteEngineer engineerId={engineer.id}/>*/}
                                             </TableCell>
                                         </TableRow>
                                     ))}

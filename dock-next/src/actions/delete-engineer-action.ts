@@ -3,7 +3,7 @@
 import EngineerService from "@/services/EngineerService";
 import {revalidatePath} from "next/cache";
 
-export async function deleteEngineerAction(prev: never, formData: FormData) {
+export async function deleteEngineerAction(prev: null, formData: FormData) {
     const engineerId = formData.get("engineerId") as string;
 
     try {
