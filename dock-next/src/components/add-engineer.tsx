@@ -18,7 +18,7 @@ import {useToast} from "@/hooks/use-toast";
 
 export function AddEngineer() {
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-    const { toast } = useToast()
+    const {toast} = useToast()
     const [actionState, formAction, isPending] = useActionState(addEngineerAction, null);
 
     useEffect(() => {
@@ -30,6 +30,12 @@ export function AddEngineer() {
                 action: (
                     <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
                 ),
+            })
+        }
+        if (actionState?.status === FormStatus.FAIL) {
+            toast({
+                title: actionState.message,
+                description: new Date().toString(),
             })
         }
     }, [toast, actionState]);

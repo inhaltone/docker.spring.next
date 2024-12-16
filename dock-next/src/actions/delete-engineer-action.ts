@@ -11,6 +11,7 @@ export async function deleteEngineerAction(prev: FormActionState, formData: Form
         await EngineerService.delete(engineerId);
 
         revalidatePath('/engineers');
+
         return {
             status: FormStatus.SUCCESS,
             message: `The user with id: ${engineerId} has been deleted forever!!`

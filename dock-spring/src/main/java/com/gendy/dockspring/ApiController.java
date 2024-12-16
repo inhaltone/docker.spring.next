@@ -1,5 +1,6 @@
 package com.gendy.dockspring;
 
+import com.gendy.dockspring.errorHandlers.ErrorResponse;
 import com.gendy.dockspring.uniengineers.UniEngineer;
 import com.gendy.dockspring.uniengineers.UniEngineerAlreadyExistsException;
 import com.gendy.dockspring.uniengineers.UniEngineerDTO;
@@ -41,11 +42,17 @@ public class ApiController {
         Optional<UniEngineer> existingEngineer = uniEngineerService.findEngineerByEmail(engineer.getEmail());
 
         if (existingEngineer.isPresent()) {
-            // TODO: Impl a global exception handler
-            throw new UniEngineerAlreadyExistsException("Oups!! This engine already exists!");
+            throw new UniEngineerAlreadyExistsException("Oups!! The engineer with email: " + engineer.getEmail() + " is already exists!");
         }
 
         return uniEngineerService.saveEngineer(engineer);
+    }
+
+    @ExceptionHandler(UniEngineerAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEngineerAlreadyExists(UniEngineerAlreadyExistsException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("delete-engineer")

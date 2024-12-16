@@ -13,17 +13,18 @@ export async function addEngineerAction(prev: FormActionState, formData: FormDat
             firstName: firstName,
             email: email
         })
-        console.log('response::', response);
 
-    } catch (e) {
-    console.error('SAVE EXCEPTION::::', e)
+        revalidatePath('/engineers');
+
+        return {
+            status: FormStatus.SUCCESS,
+            message: `Great job!! Engineer with ${response.email} has been added!`
+        };
+
+    } catch (error) {
+        return {
+            status: FormStatus.FAIL,
+            message: String(error)
+        };
     }
-
-    // Refetch the engineers after add engineer action
-    revalidatePath('/engineers');
-
-    return {
-        status: FormStatus.SUCCESS,
-        message: 'Great job man!'
-    };
 }

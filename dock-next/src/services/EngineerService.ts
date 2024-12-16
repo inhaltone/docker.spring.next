@@ -1,6 +1,6 @@
 import ApiEndpoints from "@/constants/ApiEndpoints";
 import {getBasicAuth} from "@/auth/auth";
-import {PageParams} from "@/types/serviceTypes";
+import {ErrorResponse, PageParams} from "@/types/serviceTypes";
 import {EngineerModel, EngineerPagedResponse, SaveEngineerParams} from "@/types/engineer";
 
 export default class EngineerService {
@@ -24,7 +24,7 @@ export default class EngineerService {
         }
     }
 
-    static async saveEngineer(params: SaveEngineerParams) {
+    static async saveEngineer(params: SaveEngineerParams): Promise<EngineerModel> {
         try {
             const response = await fetch(ApiEndpoints.SAVE_ENGINEER, {
                 method: 'POST',
@@ -34,10 +34,15 @@ export default class EngineerService {
                 },
                 body: JSON.stringify(params)
             });
+
+            if (!response.ok) {
+                const result: ErrorResponse = await response.json();
+                return Promise.reject(new Error(result.message));
+            }
+
             return await response.json();
         } catch (e) {
-            console.error(e);
-            return Promise.reject();
+            return Promise.reject(e);
         }
     }
 

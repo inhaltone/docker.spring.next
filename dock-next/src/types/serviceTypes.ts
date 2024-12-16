@@ -17,3 +17,8 @@ export interface PageResponse {
     empty: boolean;
     pageable: PageObject;
 }
+
+export interface ErrorResponse {
+    status: number;
+    message: string;
+}
