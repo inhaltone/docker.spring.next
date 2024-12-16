@@ -2,19 +2,28 @@
 
 import EngineerService from "@/services/EngineerService";
 import {revalidatePath} from "next/cache";
+import {FormActionState, FormStatus} from "@/types/form";
 
-export async function deleteEngineerAction(prev: null, formData: FormData) {
+export async function deleteEngineerAction(prev: FormActionState, formData: FormData): Promise<FormActionState> {
     const engineerId = formData.get("engineerId") as string;
 
     try {
-        const response = await EngineerService.delete(parseInt(engineerId));
-        console.log(response);
+        await EngineerService.delete(engineerId);
+
+        revalidatePath('/engineers');
+        return {
+            status: FormStatus.SUCCESS,
+            message: `The user with id: ${engineerId} has been deleted forever!!`
+        }
+
     } catch (e) {
-        return Promise.reject(e);
+        console.error(e);
+
+        return Promise.reject({
+            status: FormStatus.FAIL,
+            message: `The user with id: ${engineerId} does not belong to our db!!`
+        });
     }
 
-    // Refetch the engineers after add engineer action
-    revalidatePath('/engineers');
 
-    return prev;
 }

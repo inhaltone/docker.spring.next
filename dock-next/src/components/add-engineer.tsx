@@ -10,20 +10,22 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import {Input} from "@/components/ui/input"
-import {useActionState, useEffect} from "react";
+import {useActionState, useEffect, useState} from "react";
 import {addEngineerAction} from "@/actions/add-engineer-action";
 import {FormStatus} from "@/types/form";
 import {ToastAction} from "@/components/ui/toast";
 import {useToast} from "@/hooks/use-toast";
 
 export function AddEngineer() {
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const { toast } = useToast()
     const [actionState, formAction, isPending] = useActionState(addEngineerAction, null);
 
     useEffect(() => {
         if (actionState?.status === FormStatus.SUCCESS) {
+            setDialogOpen(false);
             toast({
-                title: `New engineer added: ${actionState.firstName}`,
+                title: actionState.message,
                 description: new Date().toString(),
                 action: (
                     <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
@@ -33,9 +35,9 @@ export function AddEngineer() {
     }, [toast, actionState]);
 
     return (
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">Add Engineer</Button>
+                <Button onClick={() => setDialogOpen(true)} variant="outline">Add Engineer</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -62,5 +64,6 @@ export function AddEngineer() {
                 </form>
             </DialogContent>
         </Dialog>
+
     )
 }

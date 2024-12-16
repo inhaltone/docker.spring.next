@@ -36,10 +36,9 @@ export default function RootLayout({
             <main>
                 <SidebarTrigger/>
                 {children}
-                <Toaster />
+                <Toaster/>
             </main>
         </SidebarProvider>
-
         </body>
         </html>
     );

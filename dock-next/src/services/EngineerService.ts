@@ -41,7 +41,7 @@ export default class EngineerService {
         }
     }
 
-    static async delete(engineerId: number) {
+    static async delete(engineerId: string) {
         try {
             const response = await fetch(ApiEndpoints.DELETE_ENGINEER, {
                 method: 'POST',

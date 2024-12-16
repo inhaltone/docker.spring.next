@@ -1,5 +1,4 @@
 import {PageResponse} from "@/types/serviceTypes";
-import {FormStatus} from "@/types/form";
 
 export interface EngineerModel {
     firstName: string;
@@ -16,8 +15,5 @@ export interface SaveEngineerParams {
     email: string;
 }
 
-export interface SaveEngineerFormState extends SaveEngineerParams{
-    status: FormStatus
-}
 
 

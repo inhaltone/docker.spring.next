@@ -14,12 +14,13 @@ public class UniEngineerService {
     private final UniEngineerRepo uniEngineerRepo;
 
 
-    @Transactional(readOnly = true)
-    public UniEngineer findEngineerById(final String id) {
-        return uniEngineerRepo.findById(id).orElse(null);
+    public Optional<UniEngineer> findEngineerById(final String id) {
+
+        return uniEngineerRepo.findById(id);
     }
 
     public Optional<UniEngineer> findEngineerByEmail(final String email) {
+
         return uniEngineerRepo.findByEmail(email);
     }
 

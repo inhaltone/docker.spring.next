@@ -1,8 +1,6 @@
 "use client"
 import {Button} from "@/components/ui/button";
-// import EngineerService from "@/services/EngineerService";
-import {useActionState} from "react";
-// import {addEngineerAction} from "@/actions/add-engineer-action";
+import {useActionState, useEffect} from "react";
 import {deleteEngineerAction} from "@/actions/delete-engineer-action";
 import {Input} from "@/components/ui/input";
 
@@ -11,16 +9,13 @@ interface DeleteEngineerProps {
 }
 
 export default function DeleteEngineer({engineerId}: DeleteEngineerProps) {
-
-    // const deleteEngineerById = async (id: number) => {
-    //     console.log('DELETE', id);
-    //     await EngineerService.delete(id);
-    //     console.log('finished')
-    // }
-
     const [actionState, formAction, isPending] = useActionState(deleteEngineerAction, null);
 
-    console.log('actionState::', actionState);
+    console.log('actionState::', actionState?.message);
+
+    useEffect(() => {
+        console.log('action:', actionState?.status)
+    }, [actionState]);
 
     return (
         <>

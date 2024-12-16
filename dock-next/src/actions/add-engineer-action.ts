@@ -1,11 +1,10 @@
 'use server'
 
 import EngineerService from "@/services/EngineerService";
-import {FormStatus} from "@/types/form";
-import {SaveEngineerFormState} from "@/types/engineer";
+import {FormActionState, FormStatus} from "@/types/form";
 import {revalidatePath} from "next/cache";
 
-export async function addEngineerAction(prev: SaveEngineerFormState | null, formData: FormData) {
+export async function addEngineerAction(prev: FormActionState, formData: FormData): Promise<FormActionState> {
     const firstName = formData.get("name") as string;
     const email = formData.get("email") as string;
 
@@ -24,8 +23,7 @@ export async function addEngineerAction(prev: SaveEngineerFormState | null, form
     revalidatePath('/engineers');
 
     return {
-        firstName: firstName,
-        email: email,
-        status: FormStatus.SUCCESS
+        status: FormStatus.SUCCESS,
+        message: 'Great job man!'
     };
 }
