@@ -3,6 +3,7 @@
 import EngineerService from "@/services/EngineerService";
 import {FormStatus} from "@/types/form";
 import {SaveEngineerFormState} from "@/types/engineer";
+import {revalidatePath} from "next/cache";
 
 export async function addEngineerAction(prev: SaveEngineerFormState | null, formData: FormData) {
     const firstName = formData.get("name") as string;
@@ -18,6 +19,9 @@ export async function addEngineerAction(prev: SaveEngineerFormState | null, form
     } catch (e) {
     console.error('SAVE EXCEPTION::::', e)
     }
+
+    // Refetch the engineers after add engineer action
+    revalidatePath('/engineers');
 
     return {
         firstName: firstName,
