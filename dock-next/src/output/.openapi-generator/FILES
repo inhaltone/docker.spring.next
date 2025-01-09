@@ -1,0 +1,14 @@
+.openapi-generator-ignore
+apis/ApiControllerApi.ts
+apis/UniUserControllerApi.ts
+apis/index.ts
+index.ts
+models/PageUniEngineer.ts
+models/PageUniUserDTO.ts
+models/PageableObject.ts
+models/SortObject.ts
+models/UniEngineer.ts
+models/UniEngineerDTO.ts
+models/UniUserDTO.ts
+models/index.ts
+runtime.ts
