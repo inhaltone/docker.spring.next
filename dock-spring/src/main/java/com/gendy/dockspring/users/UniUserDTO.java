@@ -1,13 +1,13 @@
-package com.gendy.dockspring.uniengineers;
+package com.gendy.dockspring.users;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
+@Data
+@AllArgsConstructor
 @Schema(description = "UniUserDTO")
 public class UniUserDTO {
 
@@ -16,4 +16,8 @@ public class UniUserDTO {
 
     @Schema(description = "The email of the user", example = "mail@mail.com")
     private String email;
+
+    @Schema(description = "Role of the user")
+    private UserRoleEnum role;
+
 }

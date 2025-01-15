@@ -1,5 +1,5 @@
 import ApiRequestBuilder from "@/api/client/apiRequestBuilder";
-import {ApiControllerApi, GetAllUniEngineersPagedRequest} from "@/output";
+import {ApiControllerApi, GetAllUniEngineersPagedRequest} from "@/api/openapi";
 
 export default class EngineerServiceApi extends ApiRequestBuilder {
     private static apiInstance: ApiControllerApi | null = null;
@@ -11,8 +11,9 @@ export default class EngineerServiceApi extends ApiRequestBuilder {
         return EngineerServiceApi.apiInstance;
     }
 
-    public async getAllEngineersPaged() {
-        const params = this.queryParams as GetAllUniEngineersPagedRequest;
+    public async getAllEngineersPaged(params: GetAllUniEngineersPagedRequest) {
+        // Try catch and get exceptions
+        // const params = this.queryParams as GetAllUniEngineersPagedRequest;
         return EngineerServiceApi.api.getAllUniEngineersPaged(params);
     }
 }

@@ -28,32 +28,9 @@ export interface GetUsersRequest {
 }
 
 /**
- * UniUserControllerApi - interface
- * 
- * @export
- * @interface UniUserControllerApiInterface
- */
-export interface UniUserControllerApiInterface {
-    /**
-     * 
-     * @param {number} page 
-     * @param {number} size 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UniUserControllerApiInterface
-     */
-    getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>>;
-
-    /**
-     */
-    getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO>;
-
-}
-
-/**
  * 
  */
-export class UniUserControllerApi extends runtime.BaseAPI implements UniUserControllerApiInterface {
+export class UniUserControllerApi extends runtime.BaseAPI {
 
     /**
      */

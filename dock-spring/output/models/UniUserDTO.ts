@@ -39,15 +39,16 @@ export interface UniUserDTO {
     role?: UniUserDTORoleEnum;
 }
 
+
 /**
-* @export
-* @enum {string}
-*/
-export enum UniUserDTORoleEnum {
-    Engineer = 'ENGINEER',
-    Sales = 'SALES',
-    Business = 'BUSINESS'
-}
+ * @export
+ */
+export const UniUserDTORoleEnum = {
+    Engineer: 'ENGINEER',
+    Sales: 'SALES',
+    Business: 'BUSINESS'
+} as const;
+export type UniUserDTORoleEnum = typeof UniUserDTORoleEnum[keyof typeof UniUserDTORoleEnum];
 
 
 /**

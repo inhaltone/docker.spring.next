@@ -22,6 +22,7 @@ export async function addEngineerAction(prev: FormActionState, formData: FormDat
         };
 
     } catch (error) {
+        console.log('error:', error);
         return {
             status: FormStatus.FAIL,
             message: String(error)

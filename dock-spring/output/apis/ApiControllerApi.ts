@@ -46,71 +46,9 @@ export interface SaveEngineerRequest {
 }
 
 /**
- * ApiControllerApi - interface
- * 
- * @export
- * @interface ApiControllerApiInterface
- */
-export interface ApiControllerApiInterface {
-    /**
-     * 
-     * @param {UniEngineerDTO} uniEngineerDTO 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiControllerApiInterface
-     */
-    deleteEngineerRaw(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
-
-    /**
-     */
-    deleteEngineer(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
-
-    /**
-     * 
-     * @param {string} engineerId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiControllerApiInterface
-     */
-    findEngineerByIdRaw(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>>;
-
-    /**
-     */
-    findEngineerById(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer>;
-
-    /**
-     * 
-     * @param {number} page 
-     * @param {number} size 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiControllerApiInterface
-     */
-    getAllUniEngineersPagedRaw(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniEngineer>>;
-
-    /**
-     */
-    getAllUniEngineersPaged(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniEngineer>;
-
-    /**
-     * 
-     * @param {UniEngineer} uniEngineer 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiControllerApiInterface
-     */
-    saveEngineerRaw(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>>;
-
-    /**
-     */
-    saveEngineer(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer>;
-
-}
-
-/**
  * 
  */
-export class ApiControllerApi extends runtime.BaseAPI implements ApiControllerApiInterface {
+export class ApiControllerApi extends runtime.BaseAPI {
 
     /**
      */
