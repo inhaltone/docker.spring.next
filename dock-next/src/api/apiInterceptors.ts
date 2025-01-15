@@ -18,11 +18,6 @@ export const interceptor: Middleware = {
         // TODO: Handle error here
         console.log("[MIDDLEWARE] Post Response: Status", context.response.status);
 
-        // if (context.response.status === 500) {
-        //     throw new Error('Hello')
-        // }
-
-        // Optionally modify the response or take actions based on it
         if (context.response.ok) {
             console.log("[MIDDLEWARE] Response OK");
         } else {

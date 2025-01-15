@@ -1,7 +1,6 @@
-import ApiRequestBuilder from "@/api/client/apiRequestBuilder";
 import {ApiControllerApi, GetAllUniEngineersPagedRequest} from "@/api/openapi";
 
-export default class EngineerServiceApi extends ApiRequestBuilder {
+export default class EngineerServiceApi {
     private static apiInstance: ApiControllerApi | null = null;
 
     private static get api(): ApiControllerApi {
