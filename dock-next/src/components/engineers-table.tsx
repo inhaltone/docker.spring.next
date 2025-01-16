@@ -4,17 +4,26 @@ import Link from "next/link";
 import IconEyeFill from "@/components/icons/IconEyeFill";
 import PageableBuilder from "@/api/builders/PageableBuilder";
 import {GetAllUniEngineersPagedRequest} from "@/api/openapi";
+import AbstractRequestBuilder from "@/api/builders/AbstractRequestBuilder";
 
 export default async function EngineersTable() {
 
-    const {content} = await engineerServiceClientApi
-        .getAllEngineersPaged(
-            PageableBuilder
-                .builder()
-                .withSize(10)
-                .withPage(0)
-                .build() as GetAllUniEngineersPagedRequest
-        );
+    // const {content} = await engineerServiceClientApi
+    //     .getAllEngineersPaged(
+    //         PageableBuilder
+    //             .builder()
+    //             .withSize(10)
+    //             .withPage(0)
+    //             .build() as GetAllUniEngineersPagedRequest
+    //     );
+
+    const {content} = await engineerServiceClientApi.getAllEngineersPaged(
+        AbstractRequestBuilder
+            .builder<GetAllUniEngineersPagedRequest>()
+            .withParams({page: 0})
+            .withParams({size: 10})
+            .build()
+    )
 
 
     return (

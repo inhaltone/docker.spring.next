@@ -48,7 +48,7 @@ export interface SaveEngineerRequest {
 /**
  * 
  */
-export class ApiControllerApi extends runtime.BaseAPI {
+export class UniEngineerControllerApi extends runtime.BaseAPI {
 
     /**
      */

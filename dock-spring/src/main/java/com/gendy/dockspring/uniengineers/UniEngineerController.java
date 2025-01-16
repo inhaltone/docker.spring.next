@@ -1,7 +1,6 @@
-package com.gendy.dockspring;
+package com.gendy.dockspring.uniengineers;
 
 import com.gendy.dockspring.errorHandlers.ErrorResponse;
-import com.gendy.dockspring.uniengineers.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("api")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
-public class ApiController {
+public class UniEngineerController {
     final UniEngineerService uniEngineerService;
 
 
