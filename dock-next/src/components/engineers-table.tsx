@@ -1,14 +1,13 @@
-import {Table, TableCaption, TableHead, TableHeader, TableRow, TableBody, TableCell} from "@/components/ui/table";
-import {engineerServiceClientApi} from "@/api/api";
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {EngineerServiceClientApi} from "@/api/api";
 import Link from "next/link";
 import IconEyeFill from "@/components/icons/IconEyeFill";
-import PageableBuilder from "@/api/builders/PageableBuilder";
 import {GetAllUniEngineersPagedRequest} from "@/api/openapi";
 import AbstractRequestBuilder from "@/api/builders/AbstractRequestBuilder";
 
 export default async function EngineersTable() {
 
-    // const {content} = await engineerServiceClientApi
+    // const {content} = await EngineerServiceClientApi
     //     .getAllEngineersPaged(
     //         PageableBuilder
     //             .builder()
@@ -17,13 +16,14 @@ export default async function EngineersTable() {
     //             .build() as GetAllUniEngineersPagedRequest
     //     );
 
-    const {content} = await engineerServiceClientApi.getAllEngineersPaged(
-        AbstractRequestBuilder
-            .builder<GetAllUniEngineersPagedRequest>()
-            .withParams({page: 0})
-            .withParams({size: 10})
-            .build()
-    )
+    const {content} = await EngineerServiceClientApi
+        .getAllEngineersPaged(
+            AbstractRequestBuilder
+                .builder<GetAllUniEngineersPagedRequest>()
+                .withParams({page: 0})
+                .withParams({size: 10})
+                .build()
+        )
 
 
     return (

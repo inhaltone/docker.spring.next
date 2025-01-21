@@ -14,188 +14,200 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  PageUniEngineer,
-  UniEngineer,
-  UniEngineerDTO,
-} from '../models/index';
-import {
-    PageUniEngineerFromJSON,
-    PageUniEngineerToJSON,
-    UniEngineerFromJSON,
-    UniEngineerToJSON,
-    UniEngineerDTOFromJSON,
-    UniEngineerDTOToJSON,
-} from '../models/index';
+    import type {
+        PageUniEngineer,
+        UniEngineer,
+        UniEngineerDTO,
+    } from '../models/index';
+        import {
+            PageUniEngineerFromJSON,
+            PageUniEngineerToJSON,
+            UniEngineerFromJSON,
+            UniEngineerToJSON,
+            UniEngineerDTOFromJSON,
+            UniEngineerDTOToJSON,
+        } from '../models/index';
 
-export interface DeleteEngineerRequest {
-    uniEngineerDTO: UniEngineerDTO;
-}
+            export interface DeleteEngineerRequest {
+                uniEngineerDTO: UniEngineerDTO;
+            }
 
-export interface FindEngineerByIdRequest {
-    engineerId: string;
-}
+            export interface FindEngineerByIdRequest {
+                engineerId: string;
+            }
 
-export interface GetAllUniEngineersPagedRequest {
-    page: number;
-    size: number;
-}
+            export interface GetAllUniEngineersPagedRequest {
+                page: number;
+                size: number;
+            }
 
-export interface SaveEngineerRequest {
-    uniEngineer: UniEngineer;
-}
+            export interface SaveEngineerRequest {
+                uniEngineer: UniEngineer;
+            }
 
-/**
- * 
- */
-export class UniEngineerControllerApi extends runtime.BaseAPI {
+        /**
+        * 
+        */
+            export class UniEngineerControllerApi extends runtime.BaseAPI {
 
-    /**
-     */
-    async deleteEngineerRaw(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['uniEngineerDTO'] == null) {
-            throw new runtime.RequiredError(
-                'uniEngineerDTO',
-                'Required parameter "uniEngineerDTO" was null or undefined when calling deleteEngineer().'
-            );
-        }
+            /**
+            */
+            async deleteEngineerRaw(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+                    if (requestParameters['uniEngineerDTO'] == null) {
+                    throw new runtime.RequiredError(
+                    'uniEngineerDTO',
+                    'Required parameter "uniEngineerDTO" was null or undefined when calling deleteEngineer().'
+                    );
+                    }
 
-        const queryParameters: any = {};
+            const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+            const headerParameters: runtime.HTTPHeaders = {};
+            headerParameters['X-Gateway-Headers'] = `/api/delete-engineer`;
+        /*YOLO*/
 
-        headerParameters['Content-Type'] = 'application/json';
+                    headerParameters['Content-Type'] = 'application/json';
 
-        const response = await this.request({
+            const response = await this.request({
+           /* PATH */
             path: `/api/delete-engineer`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: UniEngineerDTOToJSON(requestParameters['uniEngineerDTO']),
-        }, initOverrides);
+                                body: UniEngineerDTOToJSON(requestParameters['uniEngineerDTO']),
+            }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
-    }
+                return new runtime.VoidApiResponse(response);
+            }
 
-    /**
-     */
-    async deleteEngineer(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteEngineerRaw(requestParameters, initOverrides);
-    }
+            /**
+            */
+                async deleteEngineer(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+                    await this.deleteEngineerRaw(requestParameters, initOverrides);
+                }
 
-    /**
-     */
-    async findEngineerByIdRaw(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>> {
-        if (requestParameters['engineerId'] == null) {
-            throw new runtime.RequiredError(
-                'engineerId',
-                'Required parameter "engineerId" was null or undefined when calling findEngineerById().'
-            );
-        }
+            /**
+            */
+            async findEngineerByIdRaw(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>> {
+                    if (requestParameters['engineerId'] == null) {
+                    throw new runtime.RequiredError(
+                    'engineerId',
+                    'Required parameter "engineerId" was null or undefined when calling findEngineerById().'
+                    );
+                    }
 
-        const queryParameters: any = {};
+            const queryParameters: any = {};
 
-        if (requestParameters['engineerId'] != null) {
-            queryParameters['engineerId'] = requestParameters['engineerId'];
-        }
+                    if (requestParameters['engineerId'] != null) {
+                            queryParameters['engineerId'] = requestParameters['engineerId'];
+                    }
 
-        const headerParameters: runtime.HTTPHeaders = {};
+            const headerParameters: runtime.HTTPHeaders = {};
+            headerParameters['X-Gateway-Headers'] = `/api/find-user-by-id`;
+        /*YOLO*/
 
-        const response = await this.request({
+            const response = await this.request({
+           /* PATH */
             path: `/api/find-user-by-id`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+            }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UniEngineerFromJSON(jsonValue));
-    }
+                                return new runtime.JSONApiResponse(response, (jsonValue) => UniEngineerFromJSON(jsonValue));
+            }
 
-    /**
-     */
-    async findEngineerById(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer> {
-        const response = await this.findEngineerByIdRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
+            /**
+            */
+                async findEngineerById(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer> {
+                    const response = await this.findEngineerByIdRaw(requestParameters, initOverrides);
+                        return await response.value();
+                }
 
-    /**
-     */
-    async getAllUniEngineersPagedRaw(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniEngineer>> {
-        if (requestParameters['page'] == null) {
-            throw new runtime.RequiredError(
-                'page',
-                'Required parameter "page" was null or undefined when calling getAllUniEngineersPaged().'
-            );
-        }
+            /**
+            */
+            async getAllUniEngineersPagedRaw(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniEngineer>> {
+                    if (requestParameters['page'] == null) {
+                    throw new runtime.RequiredError(
+                    'page',
+                    'Required parameter "page" was null or undefined when calling getAllUniEngineersPaged().'
+                    );
+                    }
 
-        if (requestParameters['size'] == null) {
-            throw new runtime.RequiredError(
-                'size',
-                'Required parameter "size" was null or undefined when calling getAllUniEngineersPaged().'
-            );
-        }
+                    if (requestParameters['size'] == null) {
+                    throw new runtime.RequiredError(
+                    'size',
+                    'Required parameter "size" was null or undefined when calling getAllUniEngineersPaged().'
+                    );
+                    }
 
-        const queryParameters: any = {};
+            const queryParameters: any = {};
 
-        if (requestParameters['page'] != null) {
-            queryParameters['page'] = requestParameters['page'];
-        }
+                    if (requestParameters['page'] != null) {
+                            queryParameters['page'] = requestParameters['page'];
+                    }
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
-        }
+                    if (requestParameters['size'] != null) {
+                            queryParameters['size'] = requestParameters['size'];
+                    }
 
-        const headerParameters: runtime.HTTPHeaders = {};
+            const headerParameters: runtime.HTTPHeaders = {};
+            headerParameters['X-Gateway-Headers'] = `/api/get-all-engineers`;
+        /*YOLO*/
 
-        const response = await this.request({
+            const response = await this.request({
+           /* PATH */
             path: `/api/get-all-engineers`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+            }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PageUniEngineerFromJSON(jsonValue));
-    }
+                                return new runtime.JSONApiResponse(response, (jsonValue) => PageUniEngineerFromJSON(jsonValue));
+            }
 
-    /**
-     */
-    async getAllUniEngineersPaged(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniEngineer> {
-        const response = await this.getAllUniEngineersPagedRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
+            /**
+            */
+                async getAllUniEngineersPaged(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniEngineer> {
+                    const response = await this.getAllUniEngineersPagedRaw(requestParameters, initOverrides);
+                        return await response.value();
+                }
 
-    /**
-     */
-    async saveEngineerRaw(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>> {
-        if (requestParameters['uniEngineer'] == null) {
-            throw new runtime.RequiredError(
-                'uniEngineer',
-                'Required parameter "uniEngineer" was null or undefined when calling saveEngineer().'
-            );
-        }
+            /**
+            */
+            async saveEngineerRaw(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>> {
+                    if (requestParameters['uniEngineer'] == null) {
+                    throw new runtime.RequiredError(
+                    'uniEngineer',
+                    'Required parameter "uniEngineer" was null or undefined when calling saveEngineer().'
+                    );
+                    }
 
-        const queryParameters: any = {};
+            const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+            const headerParameters: runtime.HTTPHeaders = {};
+            headerParameters['X-Gateway-Headers'] = `/api/save-engineer`;
+        /*YOLO*/
 
-        headerParameters['Content-Type'] = 'application/json';
+                    headerParameters['Content-Type'] = 'application/json';
 
-        const response = await this.request({
+            const response = await this.request({
+           /* PATH */
             path: `/api/save-engineer`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: UniEngineerToJSON(requestParameters['uniEngineer']),
-        }, initOverrides);
+                                body: UniEngineerToJSON(requestParameters['uniEngineer']),
+            }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UniEngineerFromJSON(jsonValue));
-    }
+                                return new runtime.JSONApiResponse(response, (jsonValue) => UniEngineerFromJSON(jsonValue));
+            }
 
-    /**
-     */
-    async saveEngineer(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer> {
-        const response = await this.saveEngineerRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
+            /**
+            */
+                async saveEngineer(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer> {
+                    const response = await this.saveEngineerRaw(requestParameters, initOverrides);
+                        return await response.value();
+                }
 
-}
+        }

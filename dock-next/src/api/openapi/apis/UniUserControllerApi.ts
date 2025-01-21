@@ -14,68 +14,71 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  PageUniUserDTO,
-} from '../models/index';
-import {
-    PageUniUserDTOFromJSON,
-    PageUniUserDTOToJSON,
-} from '../models/index';
+    import type {
+        PageUniUserDTO,
+    } from '../models/index';
+        import {
+            PageUniUserDTOFromJSON,
+            PageUniUserDTOToJSON,
+        } from '../models/index';
 
-export interface GetUsersRequest {
-    page: number;
-    size: number;
-}
+            export interface GetUsersRequest {
+                page: number;
+                size: number;
+            }
 
-/**
- * 
- */
-export class UniUserControllerApi extends runtime.BaseAPI {
+        /**
+        * 
+        */
+            export class UniUserControllerApi extends runtime.BaseAPI {
 
-    /**
-     */
-    async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>> {
-        if (requestParameters['page'] == null) {
-            throw new runtime.RequiredError(
-                'page',
-                'Required parameter "page" was null or undefined when calling getUsers().'
-            );
-        }
+            /**
+            */
+            async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>> {
+                    if (requestParameters['page'] == null) {
+                    throw new runtime.RequiredError(
+                    'page',
+                    'Required parameter "page" was null or undefined when calling getUsers().'
+                    );
+                    }
 
-        if (requestParameters['size'] == null) {
-            throw new runtime.RequiredError(
-                'size',
-                'Required parameter "size" was null or undefined when calling getUsers().'
-            );
-        }
+                    if (requestParameters['size'] == null) {
+                    throw new runtime.RequiredError(
+                    'size',
+                    'Required parameter "size" was null or undefined when calling getUsers().'
+                    );
+                    }
 
-        const queryParameters: any = {};
+            const queryParameters: any = {};
 
-        if (requestParameters['page'] != null) {
-            queryParameters['page'] = requestParameters['page'];
-        }
+                    if (requestParameters['page'] != null) {
+                            queryParameters['page'] = requestParameters['page'];
+                    }
 
-        if (requestParameters['size'] != null) {
-            queryParameters['size'] = requestParameters['size'];
-        }
+                    if (requestParameters['size'] != null) {
+                            queryParameters['size'] = requestParameters['size'];
+                    }
 
-        const headerParameters: runtime.HTTPHeaders = {};
+            const headerParameters: runtime.HTTPHeaders = {};
+            headerParameters['X-Gateway-Headers'] = `/api/users`;
+        /*YOLO*/
 
-        const response = await this.request({
+            const response = await this.request({
+           /* PATH */
             path: `/api/users`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+            }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PageUniUserDTOFromJSON(jsonValue));
-    }
+                                return new runtime.JSONApiResponse(response, (jsonValue) => PageUniUserDTOFromJSON(jsonValue));
+            }
 
-    /**
-     */
-    async getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO> {
-        const response = await this.getUsersRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
+            /**
+            */
+                async getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO> {
+                    const response = await this.getUsersRaw(requestParameters, initOverrides);
+                        return await response.value();
+                }
 
-}
+        }

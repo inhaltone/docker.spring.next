@@ -10,6 +10,7 @@ export const interceptor: Middleware = {
             init: {
                 ...context.init,
                 headers: modifiedHeaders,
+                mode: 'no-cors'
             },
         };
     },

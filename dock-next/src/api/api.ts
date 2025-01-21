@@ -1,4 +1,4 @@
-import EngineerServiceApi from "@/api/services/engineerService";
+import EngineerServiceApi from "@/api/services/EngineerService";
 import {Configuration, DefaultConfig} from "@/api/openapi";
 import {interceptor} from "@/api/apiInterceptors";
 
@@ -11,4 +11,4 @@ DefaultConfig.config = new Configuration({
     },
 });
 
-export const engineerServiceClientApi = new EngineerServiceApi();
+export const EngineerServiceClientApi = new EngineerServiceApi();

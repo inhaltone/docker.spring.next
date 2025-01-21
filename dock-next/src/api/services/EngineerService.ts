@@ -10,6 +10,10 @@ export default class EngineerServiceApi {
         return EngineerServiceApi.apiInstance;
     }
 
+    api() {
+        return EngineerServiceApi.api;
+    }
+
     public async getAllEngineersPaged(params: GetAllUniEngineersPagedRequest) {
         // Try catch and get exceptions
         // const params = this.queryParams as GetAllUniEngineersPagedRequest;

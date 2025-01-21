@@ -1,7 +1,7 @@
 export default class PageableBuilder {
     private params: { page?: number, size?: number } = {};
 
-    static builder() {
+    static builder(): PageableBuilder {
         return new PageableBuilder();
     }
 
@@ -9,6 +9,7 @@ export default class PageableBuilder {
         if (typeof value !== "undefined" && value >= 0) {
             this.params.page = value;
         }
+
         return this;
     }
 
@@ -20,7 +21,7 @@ export default class PageableBuilder {
         return this;
     }
 
-    build() {
+    build(): { page?: number, size?: number } {
         return this.params;
     }
 }
