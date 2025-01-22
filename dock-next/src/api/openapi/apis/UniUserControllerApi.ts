@@ -65,7 +65,8 @@ import * as runtime from '../runtime';
 
             const response = await this.request({
            /* PATH */
-            path: `/api/users`,
+            /* path: `/api/users`, */
+            path: '/camel/genericcrud',
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

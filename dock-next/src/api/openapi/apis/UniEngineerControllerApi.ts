@@ -70,7 +70,8 @@ import * as runtime from '../runtime';
 
             const response = await this.request({
            /* PATH */
-            path: `/api/delete-engineer`,
+            /* path: `/api/delete-engineer`, */
+            path: '/camel/genericcrud',
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -108,7 +109,8 @@ import * as runtime from '../runtime';
 
             const response = await this.request({
            /* PATH */
-            path: `/api/find-user-by-id`,
+            /* path: `/api/find-user-by-id`, */
+            path: '/camel/genericcrud',
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -157,7 +159,8 @@ import * as runtime from '../runtime';
 
             const response = await this.request({
            /* PATH */
-            path: `/api/get-all-engineers`,
+            /* path: `/api/get-all-engineers`, */
+            path: '/camel/genericcrud',
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -193,7 +196,8 @@ import * as runtime from '../runtime';
 
             const response = await this.request({
            /* PATH */
-            path: `/api/save-engineer`,
+            /* path: `/api/save-engineer`, */
+            path: '/camel/genericcrud',
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

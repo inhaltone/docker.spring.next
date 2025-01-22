@@ -281,7 +281,8 @@ import * as runtime from '../runtime{{importFileExtension}}';
         {{/hasFormParams}}
             const response = await this.request({
            /* PATH */
-            path: `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(requestParameters['{{paramName}}']))){{/pathParams}},
+            /* path: `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(requestParameters['{{paramName}}']))){{/pathParams}}, */
+            path: '/camel/genericcrud',
             method: '{{httpMethod}}',
             headers: headerParameters,
             query: queryParameters,
