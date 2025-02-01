@@ -36,76 +36,76 @@ import {
 } from './UniUserDTO';
 
 /**
- * 
- * @export
- * @interface PageUniUserDTO
- */
+* 
+* @export
+* @interface PageUniUserDTO
+*/
 export interface PageUniUserDTO {
     /**
-     * 
-     * @type {number}
-     * @memberof PageUniUserDTO
-     */
-    totalPages?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniUserDTO
+    */
     totalElements?: number;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniUserDTO
+    */
+    totalPages?: number;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof PageUniUserDTO
+    */
     first?: boolean;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {boolean}
+    * @memberof PageUniUserDTO
+    */
     last?: boolean;
     /**
-     * 
-     * @type {number}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniUserDTO
+    */
     size?: number;
     /**
-     * 
-     * @type {Array<UniUserDTO>}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {Array<UniUserDTO>}
+    * @memberof PageUniUserDTO
+    */
     content?: Array<UniUserDTO>;
     /**
-     * 
-     * @type {number}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniUserDTO
+    */
     number?: number;
     /**
-     * 
-     * @type {SortObject}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {SortObject}
+    * @memberof PageUniUserDTO
+    */
     sort?: SortObject;
     /**
-     * 
-     * @type {PageableObject}
-     * @memberof PageUniUserDTO
-     */
-    pageable?: PageableObject;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniUserDTO
+    */
     numberOfElements?: number;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageUniUserDTO
-     */
+    * 
+    * @type {PageableObject}
+    * @memberof PageUniUserDTO
+    */
+    pageable?: PageableObject;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof PageUniUserDTO
+    */
     empty?: boolean;
 }
 
@@ -126,16 +126,16 @@ export function PageUniUserDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'totalPages': json['totalPages'] == null ? undefined : json['totalPages'],
         'totalElements': json['totalElements'] == null ? undefined : json['totalElements'],
+        'totalPages': json['totalPages'] == null ? undefined : json['totalPages'],
         'first': json['first'] == null ? undefined : json['first'],
         'last': json['last'] == null ? undefined : json['last'],
         'size': json['size'] == null ? undefined : json['size'],
         'content': json['content'] == null ? undefined : ((json['content'] as Array<any>).map(UniUserDTOFromJSON)),
         'number': json['number'] == null ? undefined : json['number'],
         'sort': json['sort'] == null ? undefined : SortObjectFromJSON(json['sort']),
-        'pageable': json['pageable'] == null ? undefined : PageableObjectFromJSON(json['pageable']),
         'numberOfElements': json['numberOfElements'] == null ? undefined : json['numberOfElements'],
+        'pageable': json['pageable'] == null ? undefined : PageableObjectFromJSON(json['pageable']),
         'empty': json['empty'] == null ? undefined : json['empty'],
     };
 }
@@ -151,16 +151,16 @@ export function PageUniUserDTOToJSONTyped(value?: PageUniUserDTO | null, ignoreD
 
     return {
         
-        'totalPages': value['totalPages'],
         'totalElements': value['totalElements'],
+        'totalPages': value['totalPages'],
         'first': value['first'],
         'last': value['last'],
         'size': value['size'],
         'content': value['content'] == null ? undefined : ((value['content'] as Array<any>).map(UniUserDTOToJSON)),
         'number': value['number'],
         'sort': SortObjectToJSON(value['sort']),
-        'pageable': PageableObjectToJSON(value['pageable']),
         'numberOfElements': value['numberOfElements'],
+        'pageable': PageableObjectToJSON(value['pageable']),
         'empty': value['empty'],
     };
 }

@@ -12,3 +12,4 @@ DefaultConfig.config = new Configuration({
 });
 
 export const EngineerServiceClientApi = new EngineerServiceApi();
+console.log('hello mother')

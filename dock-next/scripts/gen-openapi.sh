@@ -12,6 +12,12 @@ docker run --rm \
   -i http://host.docker.internal:8080/v3/api-docs \
   -g typescript-fetch \
   -o /local$OUTPUT_PATH \
-  --additional-properties=stringEnums=false,supportsES6=true,prefixParameterInterfaces=false,useSingleRequestParameter=true
+  --template-dir=/local/templates \
+  --additional-properties=stringEnums=true \
+  --additional-properties=supportsES6=true \
+  --additional-properties=prefixParameterInterfaces=false \
+  --additional-properties=useSingleRequestParameter=true \
+  --additional-properties=validationAttributes=false \
+  --additional-properties=withInterfaces=true \
 
 echo "OUTPUT DIR:: => ${PWD}"$OUTPUT_PATH

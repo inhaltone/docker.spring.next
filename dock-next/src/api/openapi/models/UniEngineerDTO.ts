@@ -14,23 +14,61 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
- * @export
- * @interface UniEngineerDTO
- */
+* 
+* @export
+* @interface UniEngineerDTO
+*/
 export interface UniEngineerDTO {
     /**
-     * 
-     * @type {number}
-     * @memberof UniEngineerDTO
-     */
-    uniEngineerId?: number;
+    * 
+    * @type {number}
+    * @memberof UniEngineerDTO
+    */
+    uniEngineerId: number;
+    /**
+    * Date in the format dd/MM/yyyy
+    * @type {Date}
+    * @memberof UniEngineerDTO
+    */
+    dateRegistered: Date;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof UniEngineerDTO
+    */
+    hasExperience: boolean;
+    /**
+    * 
+    * @type {string}
+    * @memberof UniEngineerDTO
+        * @minLength 2
+        * @maxLength 100
+    */
+    nickName?: string;
+    /**
+    * The age of the EngineerDTO
+    * @type {number}
+    * @memberof UniEngineerDTO
+        * @minimum 15
+        * @maximum 55
+    */
+    age?: number;
+    /**
+    * email of EngineerDTO
+    * @type {string}
+    * @memberof UniEngineerDTO
+    */
+    email: string;
 }
 
 /**
  * Check if a given object implements the UniEngineerDTO interface.
  */
 export function instanceOfUniEngineerDTO(value: object): value is UniEngineerDTO {
+    if (!('uniEngineerId' in value) || value['uniEngineerId'] === undefined) return false;
+    if (!('dateRegistered' in value) || value['dateRegistered'] === undefined) return false;
+    if (!('hasExperience' in value) || value['hasExperience'] === undefined) return false;
+    if (!('email' in value) || value['email'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +82,12 @@ export function UniEngineerDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'uniEngineerId': json['uniEngineerId'] == null ? undefined : json['uniEngineerId'],
+        'uniEngineerId': json['uniEngineerId'],
+        'dateRegistered': (new Date(json['dateRegistered'])),
+        'hasExperience': json['hasExperience'],
+        'nickName': json['nickName'] == null ? undefined : json['nickName'],
+        'age': json['age'] == null ? undefined : json['age'],
+        'email': json['email'],
     };
 }
 
@@ -60,6 +103,11 @@ export function UniEngineerDTOToJSONTyped(value?: UniEngineerDTO | null, ignoreD
     return {
         
         'uniEngineerId': value['uniEngineerId'],
+        'dateRegistered': ((value['dateRegistered']).toISOString().substring(0,10)),
+        'hasExperience': value['hasExperience'],
+        'nickName': value['nickName'],
+        'age': value['age'],
+        'email': value['email'],
     };
 }
 

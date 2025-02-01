@@ -14,41 +14,41 @@
 
 import { mapValues } from '../runtime';
 /**
- * UniUserDTO
- * @export
- * @interface UniUserDTO
- */
+* UniUserDTO
+* @export
+* @interface UniUserDTO
+*/
 export interface UniUserDTO {
     /**
-     * The unique ID of the user
-     * @type {string}
-     * @memberof UniUserDTO
-     */
+    * The unique ID of the user
+    * @type {string}
+    * @memberof UniUserDTO
+    */
     name?: string;
     /**
-     * The email of the user
-     * @type {string}
-     * @memberof UniUserDTO
-     */
+    * The email of the hero.
+    * @type {string}
+    * @memberof UniUserDTO
+    */
     email?: string;
     /**
-     * Role of the user
-     * @type {string}
-     * @memberof UniUserDTO
-     */
+    * Role of the user
+    * @type {string}
+    * @memberof UniUserDTO
+    */
     role?: UniUserDTORoleEnum;
 }
 
-/**
-* @export
-* @enum {string}
-*/
-export enum UniUserDTORoleEnum {
-    Engineer = 'ENGINEER',
-    Sales = 'SALES',
-    Business = 'BUSINESS'
-}
-
+                /**
+                * @export
+                * @enum {string}
+                */
+                export enum UniUserDTORoleEnum {
+                        Engineer = 'ENGINEER',
+                        Sales = 'SALES',
+                        Business = 'BUSINESS'
+                }
+                    
 
 /**
  * Check if a given object implements the UniUserDTO interface.

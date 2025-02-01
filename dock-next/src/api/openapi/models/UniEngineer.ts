@@ -14,28 +14,28 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
- * @export
- * @interface UniEngineer
- */
+* 
+* @export
+* @interface UniEngineer
+*/
 export interface UniEngineer {
     /**
-     * 
-     * @type {number}
-     * @memberof UniEngineer
-     */
+    * 
+    * @type {number}
+    * @memberof UniEngineer
+    */
     id?: number;
     /**
-     * 
-     * @type {string}
-     * @memberof UniEngineer
-     */
+    * 
+    * @type {string}
+    * @memberof UniEngineer
+    */
     firstName?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof UniEngineer
-     */
+    * 
+    * @type {string}
+    * @memberof UniEngineer
+    */
     email?: string;
 }
 

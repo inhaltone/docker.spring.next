@@ -28,9 +28,32 @@ import * as runtime from '../runtime';
             }
 
         /**
+        * UniUserControllerApi - interface
+        * 
+        * @export
+        * @interface UniUserControllerApiInterface
+        */
+        export interface UniUserControllerApiInterface {
+            /**
+            * 
+                * @param {number} page 
+                * @param {number} size 
+            * @param {*} [options] Override http request option.
+            * @throws {RequiredError}
+            * @memberof UniUserControllerApiInterface
+            */
+            getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>>;
+
+                /**
+                */
+                getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO>;
+
+            }
+
+        /**
         * 
         */
-            export class UniUserControllerApi extends runtime.BaseAPI {
+            export class UniUserControllerApi extends runtime.BaseAPI implements UniUserControllerApiInterface {
 
             /**
             */
@@ -60,13 +83,11 @@ import * as runtime from '../runtime';
                     }
 
             const headerParameters: runtime.HTTPHeaders = {};
-            headerParameters['X-Gateway-Headers'] = `/api/users`;
-        /*YOLO*/
 
             const response = await this.request({
-           /* PATH */
-            /* path: `/api/users`, */
-            path: '/camel/genericcrud',
+        /api/users`.split('/').pop()
+
+            path: `/api/users`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -46,9 +46,71 @@ import * as runtime from '../runtime';
             }
 
         /**
+        * UniEngineerControllerApi - interface
+        * 
+        * @export
+        * @interface UniEngineerControllerApiInterface
+        */
+        export interface UniEngineerControllerApiInterface {
+            /**
+            * 
+                * @param {UniEngineerDTO} uniEngineerDTO 
+            * @param {*} [options] Override http request option.
+            * @throws {RequiredError}
+            * @memberof UniEngineerControllerApiInterface
+            */
+            deleteEngineerRaw(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+
+                /**
+                */
+                deleteEngineer(requestParameters: DeleteEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+
+            /**
+            * 
+                * @param {string} engineerId 
+            * @param {*} [options] Override http request option.
+            * @throws {RequiredError}
+            * @memberof UniEngineerControllerApiInterface
+            */
+            findEngineerByIdRaw(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>>;
+
+                /**
+                */
+                findEngineerById(requestParameters: FindEngineerByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer>;
+
+            /**
+            * 
+                * @param {number} page 
+                * @param {number} size 
+            * @param {*} [options] Override http request option.
+            * @throws {RequiredError}
+            * @memberof UniEngineerControllerApiInterface
+            */
+            getAllUniEngineersPagedRaw(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniEngineer>>;
+
+                /**
+                */
+                getAllUniEngineersPaged(requestParameters: GetAllUniEngineersPagedRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniEngineer>;
+
+            /**
+            * 
+                * @param {UniEngineer} uniEngineer 
+            * @param {*} [options] Override http request option.
+            * @throws {RequiredError}
+            * @memberof UniEngineerControllerApiInterface
+            */
+            saveEngineerRaw(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UniEngineer>>;
+
+                /**
+                */
+                saveEngineer(requestParameters: SaveEngineerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UniEngineer>;
+
+            }
+
+        /**
         * 
         */
-            export class UniEngineerControllerApi extends runtime.BaseAPI {
+            export class UniEngineerControllerApi extends runtime.BaseAPI implements UniEngineerControllerApiInterface {
 
             /**
             */
@@ -63,15 +125,13 @@ import * as runtime from '../runtime';
             const queryParameters: any = {};
 
             const headerParameters: runtime.HTTPHeaders = {};
-            headerParameters['X-Gateway-Headers'] = `/api/delete-engineer`;
-        /*YOLO*/
 
                     headerParameters['Content-Type'] = 'application/json';
 
             const response = await this.request({
-           /* PATH */
-            /* path: `/api/delete-engineer`, */
-            path: '/camel/genericcrud',
+        /api/delete-engineer`.split('/').pop()
+
+            path: `/api/delete-engineer`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -104,13 +164,11 @@ import * as runtime from '../runtime';
                     }
 
             const headerParameters: runtime.HTTPHeaders = {};
-            headerParameters['X-Gateway-Headers'] = `/api/find-user-by-id`;
-        /*YOLO*/
 
             const response = await this.request({
-           /* PATH */
-            /* path: `/api/find-user-by-id`, */
-            path: '/camel/genericcrud',
+        /api/find-user-by-id`.split('/').pop()
+
+            path: `/api/find-user-by-id`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -154,13 +212,11 @@ import * as runtime from '../runtime';
                     }
 
             const headerParameters: runtime.HTTPHeaders = {};
-            headerParameters['X-Gateway-Headers'] = `/api/get-all-engineers`;
-        /*YOLO*/
 
             const response = await this.request({
-           /* PATH */
-            /* path: `/api/get-all-engineers`, */
-            path: '/camel/genericcrud',
+        /api/get-all-engineers`.split('/').pop()
+
+            path: `/api/get-all-engineers`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -189,15 +245,13 @@ import * as runtime from '../runtime';
             const queryParameters: any = {};
 
             const headerParameters: runtime.HTTPHeaders = {};
-            headerParameters['X-Gateway-Headers'] = `/api/save-engineer`;
-        /*YOLO*/
 
                     headerParameters['Content-Type'] = 'application/json';
 
             const response = await this.request({
-           /* PATH */
-            /* path: `/api/save-engineer`, */
-            path: '/camel/genericcrud',
+        /api/save-engineer`.split('/').pop()
+
+            path: `/api/save-engineer`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

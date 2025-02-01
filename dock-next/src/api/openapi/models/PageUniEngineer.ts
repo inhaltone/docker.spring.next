@@ -36,76 +36,76 @@ import {
 } from './SortObject';
 
 /**
- * 
- * @export
- * @interface PageUniEngineer
- */
+* 
+* @export
+* @interface PageUniEngineer
+*/
 export interface PageUniEngineer {
     /**
-     * 
-     * @type {number}
-     * @memberof PageUniEngineer
-     */
-    totalPages?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniEngineer
+    */
     totalElements?: number;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniEngineer
+    */
+    totalPages?: number;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof PageUniEngineer
+    */
     first?: boolean;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {boolean}
+    * @memberof PageUniEngineer
+    */
     last?: boolean;
     /**
-     * 
-     * @type {number}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniEngineer
+    */
     size?: number;
     /**
-     * 
-     * @type {Array<UniEngineer>}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {Array<UniEngineer>}
+    * @memberof PageUniEngineer
+    */
     content?: Array<UniEngineer>;
     /**
-     * 
-     * @type {number}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniEngineer
+    */
     number?: number;
     /**
-     * 
-     * @type {SortObject}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {SortObject}
+    * @memberof PageUniEngineer
+    */
     sort?: SortObject;
     /**
-     * 
-     * @type {PageableObject}
-     * @memberof PageUniEngineer
-     */
-    pageable?: PageableObject;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {number}
+    * @memberof PageUniEngineer
+    */
     numberOfElements?: number;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageUniEngineer
-     */
+    * 
+    * @type {PageableObject}
+    * @memberof PageUniEngineer
+    */
+    pageable?: PageableObject;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof PageUniEngineer
+    */
     empty?: boolean;
 }
 
@@ -126,16 +126,16 @@ export function PageUniEngineerFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'totalPages': json['totalPages'] == null ? undefined : json['totalPages'],
         'totalElements': json['totalElements'] == null ? undefined : json['totalElements'],
+        'totalPages': json['totalPages'] == null ? undefined : json['totalPages'],
         'first': json['first'] == null ? undefined : json['first'],
         'last': json['last'] == null ? undefined : json['last'],
         'size': json['size'] == null ? undefined : json['size'],
         'content': json['content'] == null ? undefined : ((json['content'] as Array<any>).map(UniEngineerFromJSON)),
         'number': json['number'] == null ? undefined : json['number'],
         'sort': json['sort'] == null ? undefined : SortObjectFromJSON(json['sort']),
-        'pageable': json['pageable'] == null ? undefined : PageableObjectFromJSON(json['pageable']),
         'numberOfElements': json['numberOfElements'] == null ? undefined : json['numberOfElements'],
+        'pageable': json['pageable'] == null ? undefined : PageableObjectFromJSON(json['pageable']),
         'empty': json['empty'] == null ? undefined : json['empty'],
     };
 }
@@ -151,16 +151,16 @@ export function PageUniEngineerToJSONTyped(value?: PageUniEngineer | null, ignor
 
     return {
         
-        'totalPages': value['totalPages'],
         'totalElements': value['totalElements'],
+        'totalPages': value['totalPages'],
         'first': value['first'],
         'last': value['last'],
         'size': value['size'],
         'content': value['content'] == null ? undefined : ((value['content'] as Array<any>).map(UniEngineerToJSON)),
         'number': value['number'],
         'sort': SortObjectToJSON(value['sort']),
-        'pageable': PageableObjectToJSON(value['pageable']),
         'numberOfElements': value['numberOfElements'],
+        'pageable': PageableObjectToJSON(value['pageable']),
         'empty': value['empty'],
     };
 }

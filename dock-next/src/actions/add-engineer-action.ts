@@ -3,8 +3,7 @@
 import {FormActionState, FormStatus} from "@/types/form";
 import {revalidatePath} from "next/cache";
 import {EngineerServiceClientApi} from "@/api/api";
-import AbstractRequestBuilder from "@/api/builders/AbstractRequestBuilder";
-import {SaveEngineerRequest} from "@/api/openapi";
+import UniEngineerBuilder from "@/api/builders/UniEngineerBuilder";
 
 export async function addEngineerAction(prev: FormActionState, formData: FormData): Promise<FormActionState> {
     const firstName = formData.get("name") as string;
@@ -13,16 +12,23 @@ export async function addEngineerAction(prev: FormActionState, formData: FormDat
     try {
         const response = await EngineerServiceClientApi
             .save(
-                AbstractRequestBuilder
-                    .builder<SaveEngineerRequest>()
-                    .withParams({
-                        uniEngineer: {
-                            firstName: firstName,
-                            email: email,
-                        }
-                    })
+                UniEngineerBuilder
+                    .builder()
+                    .withEmail(email)
+                    .withFirstName(firstName)
                     .build()
             )
+            // .save(
+            //     AbstractRequestBuilder
+            //         .builder<SaveEngineerRequest>()
+            //         .withParams({
+            //             uniEngineer: {
+            //                 firstName: firstName,
+            //                 email: email,
+            //             }
+            //         })
+            //         .build()
+            // )
 
         console.log('server::', response);
         revalidatePath("/engineers");

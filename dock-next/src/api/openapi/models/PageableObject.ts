@@ -22,46 +22,46 @@ import {
 } from './SortObject';
 
 /**
- * 
- * @export
- * @interface PageableObject
- */
+* 
+* @export
+* @interface PageableObject
+*/
 export interface PageableObject {
     /**
-     * 
-     * @type {number}
-     * @memberof PageableObject
-     */
+    * 
+    * @type {number}
+    * @memberof PageableObject
+    */
     offset?: number;
     /**
-     * 
-     * @type {SortObject}
-     * @memberof PageableObject
-     */
+    * 
+    * @type {SortObject}
+    * @memberof PageableObject
+    */
     sort?: SortObject;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageableObject
-     */
+    * 
+    * @type {boolean}
+    * @memberof PageableObject
+    */
     unpaged?: boolean;
     /**
-     * 
-     * @type {boolean}
-     * @memberof PageableObject
-     */
+    * 
+    * @type {boolean}
+    * @memberof PageableObject
+    */
     paged?: boolean;
     /**
-     * 
-     * @type {number}
-     * @memberof PageableObject
-     */
+    * 
+    * @type {number}
+    * @memberof PageableObject
+    */
     pageNumber?: number;
     /**
-     * 
-     * @type {number}
-     * @memberof PageableObject
-     */
+    * 
+    * @type {number}
+    * @memberof PageableObject
+    */
     pageSize?: number;
 }
 

@@ -14,28 +14,28 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
- * @export
- * @interface SortObject
- */
+* 
+* @export
+* @interface SortObject
+*/
 export interface SortObject {
     /**
-     * 
-     * @type {boolean}
-     * @memberof SortObject
-     */
+    * 
+    * @type {boolean}
+    * @memberof SortObject
+    */
     empty?: boolean;
     /**
-     * 
-     * @type {boolean}
-     * @memberof SortObject
-     */
+    * 
+    * @type {boolean}
+    * @memberof SortObject
+    */
     unsorted?: boolean;
     /**
-     * 
-     * @type {boolean}
-     * @memberof SortObject
-     */
+    * 
+    * @type {boolean}
+    * @memberof SortObject
+    */
     sorted?: boolean;
 }
 

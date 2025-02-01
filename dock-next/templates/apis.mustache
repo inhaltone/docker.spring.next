@@ -148,8 +148,6 @@ import * as runtime from '../runtime{{importFileExtension}}';
             {{/isArray}}
         {{/queryParams}}
             const headerParameters: runtime.HTTPHeaders = {};
-            headerParameters['X-Gateway-Headers'] = `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(requestParameters['{{paramName}}']))){{/pathParams}};
-        /*YOLO*/
 
         {{#bodyParam}}
             {{^consumes}}
@@ -280,9 +278,9 @@ import * as runtime from '../runtime{{importFileExtension}}';
             {{/formParams}}
         {{/hasFormParams}}
             const response = await this.request({
-           /* PATH */
-            /* path: `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(requestParameters['{{paramName}}']))){{/pathParams}}, */
-            path: '/camel/genericcrud',
+        {{{path}}}`{{#pathParams}}.replace(`{${baseName}}`, encodeURIComponent(String(requestParameters[paramName]))){{/pathParams}}.split('/').pop()
+
+            path: `{{{path}}}`{{#pathParams}}.replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(requestParameters['{{paramName}}']))){{/pathParams}},
             method: '{{httpMethod}}',
             headers: headerParameters,
             query: queryParameters,
