@@ -4,7 +4,7 @@ import {interceptor} from "@/api/apiInterceptors";
 
 DefaultConfig.config = new Configuration({
     middleware: [interceptor],
-    basePath: process.env.BASE_PATH,
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH,
     headers: {
         "X-Internal-Path": "/api/some-entity",
         "X-Backend-Application": "backend"
@@ -12,4 +12,3 @@ DefaultConfig.config = new Configuration({
 });
 
 export const EngineerServiceClientApi = new EngineerServiceApi();
-console.log('hello mother')

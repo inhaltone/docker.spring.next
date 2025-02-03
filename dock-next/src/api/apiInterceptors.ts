@@ -2,7 +2,7 @@ import {ErrorContext, FetchParams, Middleware, RequestContext, ResponseContext} 
 
 export const interceptor: Middleware = {
     async pre(context: RequestContext): Promise<FetchParams | void> {
-        console.log("[MIDDLEWARE] Pre Request:", context);
+        console.log("[MIDDLEWARE] Pre Request:::", context);
         const modifiedHeaders = {...context.init.headers, "X-Custom-Header": "LoggingMiddleware"};
 
         return {

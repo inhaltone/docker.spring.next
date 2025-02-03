@@ -55,18 +55,6 @@ export interface PageUniUserDTO {
     totalElements?: number;
     /**
     * 
-    * @type {boolean}
-    * @memberof PageUniUserDTO
-    */
-    first?: boolean;
-    /**
-    * 
-    * @type {boolean}
-    * @memberof PageUniUserDTO
-    */
-    last?: boolean;
-    /**
-    * 
     * @type {number}
     * @memberof PageUniUserDTO
     */
@@ -106,6 +94,18 @@ export interface PageUniUserDTO {
     * @type {boolean}
     * @memberof PageUniUserDTO
     */
+    first?: boolean;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof PageUniUserDTO
+    */
+    last?: boolean;
+    /**
+    * 
+    * @type {boolean}
+    * @memberof PageUniUserDTO
+    */
     empty?: boolean;
 }
 
@@ -128,14 +128,14 @@ export function PageUniUserDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
         
         'totalPages': json['totalPages'] == null ? undefined : json['totalPages'],
         'totalElements': json['totalElements'] == null ? undefined : json['totalElements'],
-        'first': json['first'] == null ? undefined : json['first'],
-        'last': json['last'] == null ? undefined : json['last'],
         'size': json['size'] == null ? undefined : json['size'],
         'content': json['content'] == null ? undefined : ((json['content'] as Array<any>).map(UniUserDTOFromJSON)),
         'number': json['number'] == null ? undefined : json['number'],
         'sort': json['sort'] == null ? undefined : SortObjectFromJSON(json['sort']),
         'pageable': json['pageable'] == null ? undefined : PageableObjectFromJSON(json['pageable']),
         'numberOfElements': json['numberOfElements'] == null ? undefined : json['numberOfElements'],
+        'first': json['first'] == null ? undefined : json['first'],
+        'last': json['last'] == null ? undefined : json['last'],
         'empty': json['empty'] == null ? undefined : json['empty'],
     };
 }
@@ -153,14 +153,14 @@ export function PageUniUserDTOToJSONTyped(value?: PageUniUserDTO | null, ignoreD
         
         'totalPages': value['totalPages'],
         'totalElements': value['totalElements'],
-        'first': value['first'],
-        'last': value['last'],
         'size': value['size'],
         'content': value['content'] == null ? undefined : ((value['content'] as Array<any>).map(UniUserDTOToJSON)),
         'number': value['number'],
         'sort': SortObjectToJSON(value['sort']),
         'pageable': PageableObjectToJSON(value['pageable']),
         'numberOfElements': value['numberOfElements'],
+        'first': value['first'],
+        'last': value['last'],
         'empty': value['empty'],
     };
 }

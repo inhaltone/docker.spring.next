@@ -18,6 +18,7 @@ services:
     build:
       context: ./dock-next
       dockerfile: Dockerfile
+      target: dev
     container_name: dock-next
     ports:
       - "3000:3000"
@@ -27,10 +28,10 @@ services:
       - ./dock-next:/app
       - /app/node_modules
     env_file:
-      - ./dock-next/.env.docker
-    environment:
-      - NODE_ENV=${NODE_ENV}
-    command: ${NPM_COMMAND}
+      - dock-next/.env.docker.local
+#    environment:
+#      - NODE_ENV=${NODE_ENV}
+#    command: ${NPM_COMMAND}
 
 networks:
   docker-net:

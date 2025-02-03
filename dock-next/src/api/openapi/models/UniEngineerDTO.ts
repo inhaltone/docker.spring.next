@@ -29,6 +29,7 @@ export interface UniEngineerDTO {
     * Date in the format dd/MM/yyyy
     * @type {Date}
     * @memberof UniEngineerDTO
+        * @pattern /^\\d{2}\/\\d{2}\/\\d{4}$/
     */
     dateRegistered: Date;
     /**

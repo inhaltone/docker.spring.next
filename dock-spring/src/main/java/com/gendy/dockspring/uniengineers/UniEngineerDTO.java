@@ -1,12 +1,10 @@
 package com.gendy.dockspring.uniengineers;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
@@ -21,13 +19,13 @@ public class UniEngineerDTO {
             format = "date",
             description = "Date in the format dd/MM/yyyy",
             example = "31/01/2025",
-//            pattern = "^\\d{2}/\\d{2}/\\d{4}$",  // Keep as is in the schema
+            pattern = "^\\d{2}/\\d{2}/\\d{4}$",
             defaultValue = "21/12/1989"
     )
-    @NotNull(message = "Is required")
+    @NotNull
     private String dateRegistered;
 
-    @NotNull
+    @NotBlank
     private Boolean hasExperience;
 
     @Schema(
