@@ -4,7 +4,7 @@ import {interceptor} from "@/api/apiInterceptors";
 
 DefaultConfig.config = new Configuration({
     middleware: [interceptor],
-    basePath: 'http://localhost:8080',
+    basePath: process.env.BASE_PATH,
     headers: {
         "X-Internal-Path": "/api/some-entity",
         "X-Backend-Application": "backend"

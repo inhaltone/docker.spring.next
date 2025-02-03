@@ -14,93 +14,91 @@
 
 
 import * as runtime from '../runtime';
-    import type {
-        PageUniUserDTO,
-    } from '../models/index';
-        import {
-            PageUniUserDTOFromJSON,
-            PageUniUserDTOToJSON,
-        } from '../models/index';
+import type {
+  PageUniUserDTO,
+} from '../models/index';
+import {
+    PageUniUserDTOFromJSON,
+    PageUniUserDTOToJSON,
+} from '../models/index';
 
-            export interface GetUsersRequest {
-                page: number;
-                size: number;
-            }
+export interface GetUsersRequest {
+    page: number;
+    size: number;
+}
 
-        /**
-        * UniUserControllerApi - interface
-        * 
-        * @export
-        * @interface UniUserControllerApiInterface
-        */
-        export interface UniUserControllerApiInterface {
-            /**
-            * 
-                * @param {number} page 
-                * @param {number} size 
-            * @param {*} [options] Override http request option.
-            * @throws {RequiredError}
-            * @memberof UniUserControllerApiInterface
-            */
-            getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>>;
+/**
+ * UniUserControllerApi - interface
+ * 
+ * @export
+ * @interface UniUserControllerApiInterface
+ */
+export interface UniUserControllerApiInterface {
+    /**
+     * 
+     * @param {number} page 
+     * @param {number} size 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UniUserControllerApiInterface
+     */
+    getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>>;
 
-                /**
-                */
-                getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO>;
+    /**
+     */
+    getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO>;
 
-            }
+}
 
-        /**
-        * 
-        */
-            export class UniUserControllerApi extends runtime.BaseAPI implements UniUserControllerApiInterface {
+/**
+ * 
+ */
+export class UniUserControllerApi extends runtime.BaseAPI implements UniUserControllerApiInterface {
 
-            /**
-            */
-            async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>> {
-                    if (requestParameters['page'] == null) {
-                    throw new runtime.RequiredError(
-                    'page',
-                    'Required parameter "page" was null or undefined when calling getUsers().'
-                    );
-                    }
+    /**
+     */
+    async getUsersRaw(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageUniUserDTO>> {
+        if (requestParameters['page'] == null) {
+            throw new runtime.RequiredError(
+                'page',
+                'Required parameter "page" was null or undefined when calling getUsers().'
+            );
+        }
 
-                    if (requestParameters['size'] == null) {
-                    throw new runtime.RequiredError(
-                    'size',
-                    'Required parameter "size" was null or undefined when calling getUsers().'
-                    );
-                    }
+        if (requestParameters['size'] == null) {
+            throw new runtime.RequiredError(
+                'size',
+                'Required parameter "size" was null or undefined when calling getUsers().'
+            );
+        }
 
-            const queryParameters: any = {};
+        const queryParameters: any = {};
 
-                    if (requestParameters['page'] != null) {
-                            queryParameters['page'] = requestParameters['page'];
-                    }
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
 
-                    if (requestParameters['size'] != null) {
-                            queryParameters['size'] = requestParameters['size'];
-                    }
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
 
-            const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {};
 
-            const response = await this.request({
-        /api/users`.split('/').pop()
-
+        const response = await this.request({
             path: `/api/users`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-            }, initOverrides);
+        }, initOverrides);
 
-                                return new runtime.JSONApiResponse(response, (jsonValue) => PageUniUserDTOFromJSON(jsonValue));
-            }
+        return new runtime.JSONApiResponse(response, (jsonValue) => PageUniUserDTOFromJSON(jsonValue));
+    }
 
-            /**
-            */
-                async getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO> {
-                    const response = await this.getUsersRaw(requestParameters, initOverrides);
-                        return await response.value();
-                }
+    /**
+     */
+    async getUsers(requestParameters: GetUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageUniUserDTO> {
+        const response = await this.getUsersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
-        }
+}

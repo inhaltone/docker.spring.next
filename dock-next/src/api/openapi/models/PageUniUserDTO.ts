@@ -46,13 +46,13 @@ export interface PageUniUserDTO {
     * @type {number}
     * @memberof PageUniUserDTO
     */
-    totalElements?: number;
+    totalPages?: number;
     /**
     * 
     * @type {number}
     * @memberof PageUniUserDTO
     */
-    totalPages?: number;
+    totalElements?: number;
     /**
     * 
     * @type {boolean}
@@ -91,16 +91,16 @@ export interface PageUniUserDTO {
     sort?: SortObject;
     /**
     * 
-    * @type {number}
-    * @memberof PageUniUserDTO
-    */
-    numberOfElements?: number;
-    /**
-    * 
     * @type {PageableObject}
     * @memberof PageUniUserDTO
     */
     pageable?: PageableObject;
+    /**
+    * 
+    * @type {number}
+    * @memberof PageUniUserDTO
+    */
+    numberOfElements?: number;
     /**
     * 
     * @type {boolean}
@@ -126,16 +126,16 @@ export function PageUniUserDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'totalElements': json['totalElements'] == null ? undefined : json['totalElements'],
         'totalPages': json['totalPages'] == null ? undefined : json['totalPages'],
+        'totalElements': json['totalElements'] == null ? undefined : json['totalElements'],
         'first': json['first'] == null ? undefined : json['first'],
         'last': json['last'] == null ? undefined : json['last'],
         'size': json['size'] == null ? undefined : json['size'],
         'content': json['content'] == null ? undefined : ((json['content'] as Array<any>).map(UniUserDTOFromJSON)),
         'number': json['number'] == null ? undefined : json['number'],
         'sort': json['sort'] == null ? undefined : SortObjectFromJSON(json['sort']),
-        'numberOfElements': json['numberOfElements'] == null ? undefined : json['numberOfElements'],
         'pageable': json['pageable'] == null ? undefined : PageableObjectFromJSON(json['pageable']),
+        'numberOfElements': json['numberOfElements'] == null ? undefined : json['numberOfElements'],
         'empty': json['empty'] == null ? undefined : json['empty'],
     };
 }
@@ -151,16 +151,16 @@ export function PageUniUserDTOToJSONTyped(value?: PageUniUserDTO | null, ignoreD
 
     return {
         
-        'totalElements': value['totalElements'],
         'totalPages': value['totalPages'],
+        'totalElements': value['totalElements'],
         'first': value['first'],
         'last': value['last'],
         'size': value['size'],
         'content': value['content'] == null ? undefined : ((value['content'] as Array<any>).map(UniUserDTOToJSON)),
         'number': value['number'],
         'sort': SortObjectToJSON(value['sort']),
-        'numberOfElements': value['numberOfElements'],
         'pageable': PageableObjectToJSON(value['pageable']),
+        'numberOfElements': value['numberOfElements'],
         'empty': value['empty'],
     };
 }

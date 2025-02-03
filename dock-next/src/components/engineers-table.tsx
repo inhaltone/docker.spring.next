@@ -7,15 +7,6 @@ import AbstractRequestBuilder from "@/api/builders/AbstractRequestBuilder";
 
 export default async function EngineersTable() {
 
-    // const {content} = await EngineerServiceClientApi
-    //     .getAllEngineersPaged(
-    //         PageableBuilder
-    //             .builder()
-    //             .withSize(10)
-    //             .withPage(0)
-    //             .build() as GetAllUniEngineersPagedRequest
-    //     );
-
     const {content} = await EngineerServiceClientApi
         .getAllEngineersPaged(
             AbstractRequestBuilder

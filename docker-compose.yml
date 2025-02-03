@@ -3,6 +3,7 @@ services:
     build:
       context: ./dock-spring
       dockerfile: Dockerfile
+    container_name: dock-spring
     ports:
       - "8080:8080"
     networks:
@@ -17,6 +18,7 @@ services:
     build:
       context: ./dock-next
       dockerfile: Dockerfile
+    container_name: dock-next
     ports:
       - "3000:3000"
     networks:
@@ -24,6 +26,8 @@ services:
     volumes:
       - ./dock-next:/app
       - /app/node_modules
+    env_file:
+      - ./dock-next/.env.docker
     environment:
       - NODE_ENV=${NODE_ENV}
     command: ${NPM_COMMAND}
