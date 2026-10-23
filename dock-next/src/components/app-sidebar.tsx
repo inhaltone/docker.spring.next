@@ -1,4 +1,5 @@
-import {Home, Inbox} from "lucide-react"
+import Link from "next/link"
+import {Home, Users} from "lucide-react"
 
 import {
     Sidebar,
@@ -20,7 +21,7 @@ const items = [
     {
         title: "Engineers",
         url: "/engineers",
-        icon: Inbox,
+        icon: Users,
     },
 ]
 
@@ -35,10 +36,10 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <Link href={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
-                                        </a>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}

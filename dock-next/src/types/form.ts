@@ -1,13 +1,12 @@
 export enum FormStatus {
-    IDLE,
-    SUCCESS,
-    PENDING,
-    FAIL
+    SUCCESS = "success",
+    FAIL = "fail",
 }
 
-interface FormAction {
+export interface FormAction {
     status: FormStatus;
     message: string;
+    fieldErrors?: Record<string, string[] | undefined>;
 }
 
 export type FormActionState = FormAction | null;

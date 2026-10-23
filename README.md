@@ -1,95 +1,126 @@
-# dock-spring + dock-next with Docker - Proof of Concept (POC)
+# Docker · Spring Boot · Next.js
 
-## Overview
+[![CI](https://github.com/inhaltone/docker.spring.next/actions/workflows/ci.yml/badge.svg)](https://github.com/inhaltone/docker.spring.next/actions/workflows/ci.yml)
+![Java 21](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot 3.4](https://img.shields.io/badge/Spring%20Boot-3.4-6DB33F)
+![Next.js 15](https://img.shields.io/badge/Next.js-15-black)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
-This repository demonstrates a **Proof of Concept (POC)** for integrating **dock-spring** (Spring Boot 3) with *
-*dock-next** (Next.js) using **Docker**, and connecting it to a **PostgreSQL** database container. The goal of this POC
-is to showcase how these technologies can be used together to create a full-stack web application with Dockerized
-services for easy deployment and management.
+A full-stack proof-of-concept starter: a **Spring Boot** REST API and a **Next.js** UI, wired together with
+**Docker Compose** and connected by a **type-safe contract generated from OpenAPI**.
 
-## Technologies Used
+The backend is intentionally framework-driven, with no custom plumbing. Spring Data, Bean Validation, Problem Details
+and springdoc do the work.
 
-- **dock-spring**: Spring Boot 3 for building backend services.
-- **dock-next**: Next.js for building frontend applications with server-side rendering (SSR) and static site
-  generation (SSG).
-- **Docker**: Containerization platform used to package and run the backend, frontend, and database.
-- **PostgreSQL**: Relational database used to store and manage data.
-- **Java JDK 21**: The latest version of the Java Development Kit, used to build the **dock-spring** application.
+## Architecture
 
-## Features
-
-- **dock-spring** API handling backend services with **Java JDK 21**.
-- **dock-next** handling the frontend with server-side rendering.
-- PostgreSQL container for storing application data.
-- Docker Compose setup to manage all services (dock-spring, dock-next, PostgreSQL) in isolated containers.
-
-## Getting Started
-
-### Prerequisites
-
-- Docker and Docker Compose installed on your machine.
-- **Java JDK 21**: Make sure you have JDK 21 installed for local development, especially for building and running the *
-  *dock-spring** application outside of Docker if needed.
-
-### Clone the Repository
-
-```bash
-git clone <repo-url>
-cd <repo-directory>
-
+```mermaid
+flowchart LR
+    Browser -->|HTTP :3000| Next[dock-next<br/>Next.js 15]
+    Next -->|Server Components &<br/>Server Actions| Spring[dock-spring<br/>Spring Boot 3]
+    Spring -->|JPA| DB[(PostgreSQL)]
+    Spring -. /v3/api-docs .-> Gen[OpenAPI Generator<br/>+ ts-to-zod]
+    Gen -. typed client & Zod schemas .-> Next
 ```
 
-### Set Up Docker Containers
+| Layer    | Stack                                                                                     |
+|----------|-------------------------------------------------------------------------------------------|
+| Backend  | Java 21, Spring Boot 3.4, Spring Data JPA, Bean Validation, springdoc-openapi, Actuator   |
+| Frontend | Next.js 15, React 19, Server Actions, Tailwind CSS, shadcn/ui, Zod                         |
+| Contract | `typescript-fetch` client from OpenAPI Generator (custom template) plus Zod via `ts-to-zod` |
+| Infra    | Docker Compose, PostgreSQL 17, multi-stage Dockerfiles, GitHub Actions CI                 |
 
-1. Ensure you have Docker and Docker Compose installed.
-2. You need to **run PostgreSQL on your own**, either using Docker or locally, as it is not automatically provisioned in
-   this repository. If using Docker, refer to the PostgreSQL configuration in the `docker-compose.yml` file.
-3. Run the following command to start the services (dock-spring, dock-next, and PostgreSQL containers):
+## Highlights
 
-```bash
-$ docker-compose up
-```
+- **Framework-driven API.** Each controller talks straight to a `JpaRepository`. `Pageable` and `PagedModel` handle
+  paging, `@Valid` handles validation, and `ResponseStatusException` plus `spring.mvc.problemdetails.enabled` return
+  [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) errors.
+- **End-to-end types.** The TypeScript client and Zod schemas are generated from the live OpenAPI spec, so a backend
+  change shows up as a compile error in the frontend.
+- **Server-side data access.** Next.js calls the API only from Server Components and Server Actions, so the browser
+  needs no CORS setup and the API URL stays internal.
+- **One-command setup.** `docker compose up` starts the database, API and UI with health-checked startup ordering.
 
-### Kill docker container
+## Quick start
 
-```bash
-$ docker-compose down
-```
-
-# PostgreSQL Docker Setup
-
-This guide will walk you through the steps to pull the official PostgreSQL Docker image, create a PostgreSQL container, and set up a database.
-
-## Prerequisites
-
-- **Docker** installed on your system. If you don't have Docker, follow the instructions to [install Docker](https://docs.docker.com/get-docker/).
-
-## Steps
-
-### 1. **Pull the PostgreSQL Docker Image**
-
-To get the latest PostgreSQL Docker image, run the following command:
+Prerequisites: Docker with Docker Compose.
 
 ```bash
-$ docker pull postgres:latest
+git clone https://github.com/inhaltone/docker.spring.next.git
+cd docker.spring.next
+cp .env.example .env
+docker compose up --build
 ```
 
-### 2. Create and Run a PostgreSQL Container
-#### Communication port with the db is 5433 as you can see below
+| Service    | URL                                   |
+|------------|---------------------------------------|
+| Web app    | http://localhost:3000                 |
+| Swagger UI | http://localhost:8080/swagger-ui.html |
+| OpenAPI    | http://localhost:8080/v3/api-docs     |
+| Health     | http://localhost:8080/actuator/health |
+
+Stop with `docker compose down`. Add `-v` to also drop the database volume.
+
+## Local development (without Docker for apps)
 
 ```bash
-docker run --name <postgres-container-name> \
-  -e POSTGRES_USER=<user> \
-  -e POSTGRES_PASSWORD=<password> \
-  -e POSTGRES_DB=<db_name> \
-  -p 5433:5432 \
-  -v /path/to/your/local/directory:/var/lib/postgresql/data \
-  -d postgres:latest
+# 1. Database only
+docker compose up -d postgres
 
+# 2. API (Java 21). Uses localhost:5433 by default, override with SPRING_DATASOURCE_* env vars
+cd dock-spring && ./mvnw spring-boot:run
+
+# 3. Web
+cd dock-next && npm install && npm run dev
 ```
-#### Enter the default db name of postgres and the create a db
+
+## API
+
+| Method   | Path                  | Description                               |
+|----------|-----------------------|-------------------------------------------|
+| `GET`    | `/api/engineers`      | Paged list (`?page=0&size=10&sort=id`)    |
+| `GET`    | `/api/engineers/{id}` | Get one (`404` if missing)                |
+| `POST`   | `/api/engineers`      | Create (`400` invalid, `409` email taken) |
+| `DELETE` | `/api/engineers/{id}` | Delete (`204`)                            |
+| `GET`    | `/api/users`          | Paged list of users                       |
+
+## Regenerating the client
+
+Whenever the API changes, start the backend and run:
 
 ```bash
-psql -h localhost -p 5433 -U <user> -d <db_name>
+cd dock-next
+npm run generate   # OpenAPI -> src/api/openapi, then models -> src/schemas (Zod)
 ```
 
+The generator uses the custom Mustache template in `dock-next/templates` to emit plain interfaces.
+
+## Project structure
+
+```
+.
+├── docker-compose.yml        # postgres + dock-spring + dock-next
+├── dock-spring/              # Spring Boot API
+│   └── src/main/java/com/gendy/dockspring/
+│       ├── uniengineers/     # entity, repository, controller
+│       └── users/
+└── dock-next/                # Next.js app
+    ├── scripts/              # OpenAPI + Zod generators
+    ├── templates/            # custom openapi-generator template
+    └── src/
+        ├── actions/          # Server Actions
+        ├── api/              # client config + generated client
+        ├── app/              # routes
+        └── schemas/          # generated Zod schemas
+```
+
+## Tests
+
+```bash
+cd dock-spring && ./mvnw test                         # MockMvc integration tests on embedded H2
+cd dock-next && npm run lint && npm run typecheck
+```
+
+## License
+
+[MIT](LICENSE)

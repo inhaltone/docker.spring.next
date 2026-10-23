@@ -1,9 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './PageUniEngineer';
-export * from './PageUniUserDTO';
-export * from './PageableObject';
-export * from './SortObject';
+export * from './PageMetadata';
+export * from './PagedModelUniEngineer';
+export * from './PagedModelUniUser';
 export * from './UniEngineer';
-export * from './UniEngineerDTO';
-export * from './UniUserDTO';
+export * from './UniUser';

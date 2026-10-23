@@ -1,23 +1,20 @@
 #!/usr/bin/env bash
+# Generate the typed API client from the backend OpenAPI spec using the official Docker image.
+# Usage: OPENAPI_SPEC=http://host.docker.internal:8080/v3/api-docs ./scripts/gen-openapi.sh
+set -euo pipefail
 
-OUTPUT_PATH="/src/api/openapi"
+cd "$(dirname "$0")/.."
 
-echo "========================================================="
-echo "Generating models and services in typescript from openapi"
-echo "========================================================="
-sleep 1
+OPENAPI_SPEC="${OPENAPI_SPEC:-http://host.docker.internal:8080/v3/api-docs}"
+OUTPUT_DIR="src/api/openapi"
+
+echo "Generating TypeScript client from ${OPENAPI_SPEC} -> ${OUTPUT_DIR}"
 
 docker run --rm \
-  -v "${PWD}":/local openapitools/openapi-generator-cli generate \
-  -i http://host.docker.internal:8080/v3/api-docs \
+  -v "${PWD}:/local" \
+  openapitools/openapi-generator-cli:v7.10.0 generate \
+  -i "${OPENAPI_SPEC}" \
   -g typescript-fetch \
-  -o /local$OUTPUT_PATH \
-  --template-dir=/local/templates \
-  --additional-properties=stringEnums=true \
-  --additional-properties=supportsES6=true \
-  --additional-properties=prefixParameterInterfaces=false \
-  --additional-properties=useSingleRequestParameter=true \
-  --additional-properties=validationAttributes=false \
-  --additional-properties=withInterfaces=true \
-
-echo "OUTPUT DIR:: => ${PWD}"$OUTPUT_PATH
+  -o "/local/${OUTPUT_DIR}" \
+  --template-dir /local/templates \
+  --additional-properties=stringEnums=true,supportsES6=true,prefixParameterInterfaces=false,useSingleRequestParameter=true,withInterfaces=true

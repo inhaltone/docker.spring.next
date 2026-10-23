@@ -1,31 +1,22 @@
 "use client"
+
+import {useActionState} from "react";
+import {Trash2} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {useActionState, useEffect} from "react";
 import {deleteEngineerAction} from "@/actions/delete-engineer-action";
-import {Input} from "@/components/ui/input";
+import {useActionToast} from "@/hooks/use-action-toast";
 
-interface DeleteEngineerProps {
-    engineerId: number;
-}
+export default function DeleteEngineer({engineerId}: { engineerId: number }) {
+    const [state, formAction, isPending] = useActionState(deleteEngineerAction, null);
 
-export default function DeleteEngineer({engineerId}: DeleteEngineerProps) {
-    const [actionState, formAction, isPending] = useActionState(deleteEngineerAction, null);
-
-    console.log('actionState::', actionState?.message);
-
-    useEffect(() => {
-        console.log('action:', actionState?.status)
-    }, [actionState]);
+    useActionToast(state);
 
     return (
-        <>
-            <form action={formAction}>
-                <Input type="hidden" id="engineerId" name={"engineerId"} value={engineerId}
-                       className="col-span-3"/>
-                <Button disabled={isPending} variant="outline">
-                    DELETE
-                </Button>
-            </form>
-        </>
-    )
+        <form action={formAction}>
+            <input type="hidden" name="engineerId" value={engineerId}/>
+            <Button type="submit" variant="ghost" size="icon" disabled={isPending} aria-label="Delete engineer">
+                <Trash2/>
+            </Button>
+        </form>
+    );
 }

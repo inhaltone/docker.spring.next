@@ -1,30 +1,18 @@
-'use server'
+"use server"
 
-import EngineerService from "@/services/EngineerService";
 import {revalidatePath} from "next/cache";
+import {engineersApi} from "@/api/client";
+import {getApiErrorMessage} from "@/api/errors";
 import {FormActionState, FormStatus} from "@/types/form";
 
-export async function deleteEngineerAction(prev: FormActionState, formData: FormData): Promise<FormActionState> {
-    const engineerId = formData.get("engineerId") as string;
+export async function deleteEngineerAction(_prev: FormActionState, formData: FormData): Promise<FormActionState> {
+    const id = Number(formData.get("engineerId"));
 
     try {
-        await EngineerService.delete(engineerId);
-
-        revalidatePath('/engineers');
-
-        return {
-            status: FormStatus.SUCCESS,
-            message: `The user with id: ${engineerId} has been deleted forever!!`
-        }
-
-    } catch (e) {
-        console.error(e);
-
-        return Promise.reject({
-            status: FormStatus.FAIL,
-            message: `The user with id: ${engineerId} does not belong to our db!!`
-        });
+        await engineersApi.deleteEngineer({id});
+        revalidatePath("/engineers");
+        return {status: FormStatus.SUCCESS, message: `Engineer #${id} has been deleted`};
+    } catch (error) {
+        return {status: FormStatus.FAIL, message: await getApiErrorMessage(error)};
     }
-
-
 }

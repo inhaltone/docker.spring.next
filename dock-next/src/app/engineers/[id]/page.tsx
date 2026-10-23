@@ -1,23 +1,26 @@
-import EngineerService from "@/services/EngineerService";
-import {Card, CardContent} from "@/components/ui/card";
-import {Suspense} from "react";
-import EngineerFeed from "@/components/engineer-feed";
+import Link from "next/link";
+import {notFound} from "next/navigation";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {engineersApi} from "@/api/client";
+import {isNotFound} from "@/api/errors";
 
-export default async function Page({params,}: { params: Promise<{ id: string }> }) {
-    const engineerId = (await params).id;
-    const engineer = await EngineerService.findEngineerById(engineerId);
+export default async function EngineerPage({params}: { params: Promise<{ id: string }> }) {
+    const {id} = await params;
+    const engineer = await engineersApi.getEngineer({id: Number(id)}).catch((error) => {
+        if (isNotFound(error)) notFound();
+        throw error;
+    });
 
     return (
-        <Card>
-            <CardContent className={'pt-3'}>
-                <div>
-                    <strong>Name</strong>
-                    <h2>{engineer.firstName}</h2>
-                </div>
-            </CardContent>
-            <Suspense fallback={<h1>Loading...</h1>}>
-                <EngineerFeed/>
-            </Suspense>
-        </Card>
-    )
+        <div className="mx-auto w-full max-w-4xl space-y-4 p-6">
+            <Link href="/engineers" className="text-sm text-muted-foreground hover:underline">← Back to engineers</Link>
+            <Card>
+                <CardHeader>
+                    <CardTitle>{engineer.firstName}</CardTitle>
+                    <CardDescription>{engineer.email}</CardDescription>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground">Engineer #{engineer.id}</CardContent>
+            </Card>
+        </div>
+    );
 }

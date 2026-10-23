@@ -1,5 +1,7 @@
-'use client'
-import {Button} from "@/components/ui/button"
+"use client"
+
+import {useActionState, useState} from "react";
+import {Button} from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -8,68 +10,48 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import {Input} from "@/components/ui/input"
-import {useActionState, useEffect, useState} from "react";
+} from "@/components/ui/dialog";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
 import {addEngineerAction} from "@/actions/add-engineer-action";
-import {FormStatus} from "@/types/form";
-import {ToastAction} from "@/components/ui/toast";
-import {useToast} from "@/hooks/use-toast";
+import {useActionToast} from "@/hooks/use-action-toast";
 
 export function AddEngineer() {
-    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-    const {toast} = useToast()
-    const [actionState, formAction, isPending] = useActionState(addEngineerAction, null);
+    const [open, setOpen] = useState(false);
+    const [state, formAction, isPending] = useActionState(addEngineerAction, null);
 
-    useEffect(() => {
-        if (actionState?.status === FormStatus.SUCCESS) {
-            setDialogOpen(false);
-            toast({
-                title: actionState.message,
-                description: new Date().toString(),
-                action: (
-                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-                ),
-            })
-        }
-        if (actionState?.status === FormStatus.FAIL) {
-            toast({
-                title: actionState.message,
-                description: new Date().toString(),
-            })
-        }
-    }, [toast, actionState]);
+    useActionToast(state, () => setOpen(false));
 
     return (
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button onClick={() => setDialogOpen(true)} variant="outline">Add Engineer</Button>
+                <Button>Add engineer</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Add new engineer</DialogTitle>
-                    <DialogDescription>
-                        Add name and email for each new engineer entry you wish to make!
-                    </DialogDescription>
+                    <DialogTitle>Add engineer</DialogTitle>
+                    <DialogDescription>Validated with Zod on the server, persisted by Spring Boot.</DialogDescription>
                 </DialogHeader>
-                <form action={formAction}>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Input id="firstName" name={"name"}
-                                   className="col-span-3"/>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Input type={'email'} id="email"
-                                   name={"email"}
-                                   className="col-span-3"/>
-                        </div>
+                <form action={formAction} className="grid gap-4">
+                    <div className="grid gap-2">
+                        <Label htmlFor="firstName">First name</Label>
+                        <Input id="firstName" name="firstName" required/>
+                        <FieldError messages={state?.fieldErrors?.firstName}/>
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input id="email" name="email" type="email" required/>
+                        <FieldError messages={state?.fieldErrors?.email}/>
                     </div>
                     <DialogFooter>
-                        <Button type="submit" disabled={isPending}>Add</Button>
+                        <Button type="submit" disabled={isPending}>{isPending ? "Saving…" : "Save"}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
         </Dialog>
+    );
+}
 
-    )
+function FieldError({messages}: { messages?: string[] }) {
+    return messages?.length ? <p className="text-sm text-destructive">{messages[0]}</p> : null;
 }

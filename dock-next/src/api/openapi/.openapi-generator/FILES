@@ -2,12 +2,10 @@ apis/UniEngineerControllerApi.ts
 apis/UniUserControllerApi.ts
 apis/index.ts
 index.ts
-models/PageUniEngineer.ts
-models/PageUniUserDTO.ts
-models/PageableObject.ts
-models/SortObject.ts
+models/PageMetadata.ts
+models/PagedModelUniEngineer.ts
+models/PagedModelUniUser.ts
 models/UniEngineer.ts
-models/UniEngineerDTO.ts
-models/UniUserDTO.ts
+models/UniUser.ts
 models/index.ts
 runtime.ts

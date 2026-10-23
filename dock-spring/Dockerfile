@@ -1,25 +1,13 @@
-FROM openjdk:21-jdk-slim AS builder
-
-RUN apt-get update && \
-    apt-get install -y maven && \
-    rm -rf /var/lib/apt/lists/*
-
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
+COPY pom.xml ./
+RUN mvn -B -q dependency:go-offline
+COPY src src
+RUN mvn -B -q package -DskipTests
 
-COPY ./pom.xml ./pom.xml
-
-RUN mvn dependency:go-offline -B
-
-COPY ./src ./src
-
-RUN mvn clean package -DskipTests
-
-FROM openjdk:21-jdk-slim
-
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-
-COPY --from=builder /app/target/*.jar /app/app.jar
-
+COPY --from=build /app/target/*.jar app.jar
+USER 1001
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

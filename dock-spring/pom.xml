@@ -12,33 +12,24 @@
     <artifactId>dock-spring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>dock-spring</name>
-    <description>dock-spring</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    <description>Spring Boot REST API for the Docker + Spring Boot + Next.js starter</description>
     <properties>
         <java.version>21</java.version>
+        <springdoc.version>2.7.0</springdoc.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-            <version>2.3.0</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.8.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -63,39 +54,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.openapitools</groupId>-->
-<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
-<!--                <version>7.10.0</version> &lt;!&ndash; Use the latest version &ndash;&gt;-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <apiPackage>NSK</apiPackage>-->
-<!--                            <modelPackage>NSK</modelPackage>-->
-<!--                            <generatorName>typescript-fetch</generatorName>-->
-<!--                            <inputSpec>http://localhost:8080/v3/api-docs</inputSpec>-->
-<!--                            <output>${project.basedir}/output</output>-->
-<!--                            &lt;!&ndash;							<templateDirectory>src/main/resources/templates/openapi-templates</templateDirectory>&ndash;&gt;-->
-<!--                            <configOptions>-->
-<!--                                <withSeparateModelsAndApi>true</withSeparateModelsAndApi>-->
-<!--                                <stringEnums>true</stringEnums>-->
-<!--                                <supportsES6>true</supportsES6>-->
-<!--                                <withInterfaces>true</withInterfaces>-->
-<!--                            </configOptions>-->
-<!--                            <globalProperties>-->
-<!--                                &lt;!&ndash;                                Filter java classes&ndash;&gt;-->
-<!--                                <models>UniUserDTO,UniEngineerDTO</models>-->
-<!--                            </globalProperties>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -104,7 +70,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.36</version>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -123,22 +89,5 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <activatedProperties>dev</activatedProperties>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <activatedProperties>prod</activatedProperties>
-            </properties>
-        </profile>
-    </profiles>
 
 </project>

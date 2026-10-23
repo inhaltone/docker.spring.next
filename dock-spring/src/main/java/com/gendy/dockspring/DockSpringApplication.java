@@ -5,15 +5,11 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@OpenAPIDefinition(
-		info = @Info(title = "DockerSpring POC", version = "1.0", description = "My API Documentation")
-)
+@OpenAPIDefinition(info = @Info(title = "Docker Spring Next API", version = "1.0"))
 @SpringBootApplication
 public class DockSpringApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DockSpringApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(DockSpringApplication.class, args);
+    }
 }
-

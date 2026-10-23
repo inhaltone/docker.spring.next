@@ -1,66 +1,50 @@
 package com.gendy.dockspring.uniengineers;
 
-import com.gendy.dockspring.errorHandlers.ErrorResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("api")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/engineers")
 @RequiredArgsConstructor
 public class UniEngineerController {
-    final UniEngineerService uniEngineerService;
 
+    private final UniEngineerRepo repo;
 
-    @GetMapping("find-user-by-id")
-    public ResponseEntity<Optional<UniEngineer>> findEngineerById(@RequestParam("engineerId") String id) {
-        System.out.println(id);
-
-        return new ResponseEntity<>(uniEngineerService.findEngineerById(id), HttpStatus.OK);
+    @GetMapping
+    public PagedModel<UniEngineer> listEngineers(@ParameterObject Pageable pageable) {
+        return new PagedModel<>(repo.findAll(pageable));
     }
 
-    @GetMapping("get-all-engineers")
-    public ResponseEntity<Page<UniEngineer>> getAllUniEngineersPaged(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-
-        return new ResponseEntity<>(uniEngineerService.findAllEngineers(pageable), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public UniEngineer getEngineer(@PathVariable Long id) {
+        return repo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("save-engineer")
-    public UniEngineer saveEngineer(@RequestBody UniEngineer engineer) {
-        Optional<UniEngineer> existingEngineer = uniEngineerService.findEngineerByEmail(engineer.getEmail());
-
-        if (existingEngineer.isPresent()) {
-            throw new UniEngineerAlreadyExistsException("Oups!! The engineer with email: " + engineer.getEmail() + " is already exists!");
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UniEngineer createEngineer(@Valid @RequestBody UniEngineer engineer) {
+        if (repo.existsByEmailIgnoreCase(engineer.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email " + engineer.getEmail() + " is already registered");
         }
-
-        return uniEngineerService.saveEngineer(engineer);
+        return repo.save(engineer);
     }
 
-    @ExceptionHandler(UniEngineerAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleEngineerAlreadyExists(UniEngineerAlreadyExistsException ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    @PostMapping("delete-engineer")
-    public void deleteEngineer(@RequestBody UniEngineerDTO engineerDTO) {
-        System.out.println("Engineer ID: " + engineerDTO.getUniEngineerId());
-        Optional<UniEngineer> existingEngineer = uniEngineerService.findEngineerById(engineerDTO.getUniEngineerId().toString());
-
-        if (existingEngineer.isEmpty()) {
-            throw new UniEngineerAlreadyExistsException("Oups!! There is no user matching this id!");
-        }
-
-        uniEngineerService.deleteEngineerById(engineerDTO.getUniEngineerId().toString());
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEngineer(@PathVariable Long id) {
+        repo.delete(getEngineer(id));
     }
 }

@@ -3,6 +3,6 @@ import { z } from "zod";
 
 export const uniEngineerSchema = z.object({
   id: z.number().optional(),
-  firstName: z.string().optional(),
-  email: z.string().optional(),
+  firstName: z.string().min(2).max(100),
+  email: z.string(),
 });

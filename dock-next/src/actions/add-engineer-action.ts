@@ -1,70 +1,33 @@
-'use server'
+"use server"
 
-import {FormActionState, FormStatus} from "@/types/form";
 import {revalidatePath} from "next/cache";
-import {EngineerServiceClientApi} from "@/api/api";
-import UniEngineerBuilder from "@/api/builders/UniEngineerBuilder";
+import {z} from "zod";
+import {engineersApi} from "@/api/client";
+import {getApiErrorMessage} from "@/api/errors";
+import {uniEngineerSchema} from "@/schemas/UniEngineerSchema";
+import {FormActionState, FormStatus} from "@/types/form";
 
-export async function addEngineerAction(prev: FormActionState, formData: FormData): Promise<FormActionState> {
-    const firstName = formData.get("name") as string;
-    const email = formData.get("email") as string;
+const formSchema = uniEngineerSchema.omit({id: true}).extend({
+    firstName: z.string().trim().min(2).max(100),
+    email: z.string().trim().email(),
+});
 
-    try {
-        const response = await EngineerServiceClientApi
-            .save(
-                UniEngineerBuilder
-                    .builder()
-                    .withEmail(email)
-                    .withFirstName(firstName)
-                    .build()
-            )
-            // .save(
-            //     AbstractRequestBuilder
-            //         .builder<SaveEngineerRequest>()
-            //         .withParams({
-            //             uniEngineer: {
-            //                 firstName: firstName,
-            //                 email: email,
-            //             }
-            //         })
-            //         .build()
-            // )
+export async function addEngineerAction(_prev: FormActionState, formData: FormData): Promise<FormActionState> {
+    const parsed = formSchema.safeParse(Object.fromEntries(formData));
 
-        console.log('server::', response);
-        revalidatePath("/engineers");
-
-        return {
-            status: FormStatus.SUCCESS,
-            message: `Great job!! Engineer with ${response.email} has been added!`
-        };
-
-    } catch (e) {
-        console.error(e);
+    if (!parsed.success) {
         return {
             status: FormStatus.FAIL,
-            message: String(e)
+            message: "Please fix the highlighted fields",
+            fieldErrors: parsed.error.flatten().fieldErrors,
         };
     }
 
-
-    // try {
-    //     const response = await EngineerService.saveEngineer({
-    //         firstName: firstName,
-    //         email: email
-    //     })
-    //
-    //     revalidatePath('/engineers');
-    //
-    //     return {
-    //         status: FormStatus.SUCCESS,
-    //         message: `Great job!! Engineer with ${response.email} has been added!`
-    //     };
-    //
-    // } catch (error) {
-    //     console.log('error:', error);
-    //     return {
-    //         status: FormStatus.FAIL,
-    //         message: String(error)
-    //     };
-    // }
+    try {
+        const engineer = await engineersApi.createEngineer({uniEngineer: parsed.data});
+        revalidatePath("/engineers");
+        return {status: FormStatus.SUCCESS, message: `${engineer.firstName} has been added`};
+    } catch (error) {
+        return {status: FormStatus.FAIL, message: await getApiErrorMessage(error)};
+    }
 }

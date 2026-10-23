@@ -1,38 +1,45 @@
 services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      retries: 10
+
   dock-spring:
-    build:
-      context: ./dock-spring
-      dockerfile: Dockerfile
-    container_name: dock-spring
+    build: ./dock-spring
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "8080:8080"
-    networks:
-      - docker-net
-    environment:
-      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
-      - SPRING_DATASOURCE_DRIVER_CLASSNAME=${SPRING_DATASOURCE_DRIVER_CLASSNAME}
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   dock-next:
     build:
       context: ./dock-next
-      dockerfile: Dockerfile
       target: dev
-    container_name: dock-next
+    environment:
+      API_BASE_URL: http://dock-spring:8080
     ports:
       - "3000:3000"
-    networks:
-      - docker-net
     volumes:
       - ./dock-next:/app
       - /app/node_modules
-    env_file:
-      - dock-next/.env.docker.local
-#    environment:
-#      - NODE_ENV=${NODE_ENV}
-#    command: ${NPM_COMMAND}
+      - /app/.next
+    depends_on:
+      - dock-spring
 
-networks:
-  docker-net:
-    driver: bridge
+volumes:
+  postgres-data:
