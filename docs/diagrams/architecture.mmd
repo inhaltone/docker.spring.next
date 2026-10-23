@@ -1,0 +1,23 @@
+flowchart TB
+    user(["Browser"])
+    next["<b>dock-next</b> · :3000<br/>Next.js 15 · React 19<br/>Server Components & Actions"]
+    spring["<b>dock-spring</b> · :8080<br/>Spring Boot 3 · Java 21<br/>@RestController → JpaRepository"]
+    db[("<b>PostgreSQL 17</b><br/>:5432")]
+
+    spec["<b>/v3/api-docs</b><br/>OpenAPI spec (springdoc)"]
+    gen["<b>npm run generate</b><br/>OpenAPI Generator + ts-to-zod"]
+    types["<b>Typed client + Zod schemas</b><br/>src/api/openapi · src/schemas"]
+
+    user -- "HTTP" --> next
+    next -- "REST / JSON · server-side only" --> spring
+    spring -- "JPA" --> db
+
+    spring -. "exposes" .-> spec
+    spec -. "build time" .-> gen
+    gen -. "generates" .-> types
+    types -. "imported by" .-> next
+
+    classDef runtime stroke:#3574F0,stroke-width:2px
+    classDef build stroke:#4E5157,stroke-dasharray:4 3
+    class next,spring,db runtime
+    class spec,gen,types build

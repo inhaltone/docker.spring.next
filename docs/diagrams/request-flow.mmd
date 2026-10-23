@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor U as Browser
+    participant N as Next.js<br/>Server Action
+    participant Z as Zod schema<br/>(generated)
+    participant C as OpenAPI client<br/>(generated)
+    participant S as Spring Boot<br/>@RestController
+    participant R as JpaRepository
+    participant DB as PostgreSQL
+
+    U->>N: Submit "Add engineer" form
+    N->>Z: safeParse(formData)
+    alt invalid input
+        Z-->>N: field errors
+        N-->>U: Inline errors (no API call)
+    else valid
+        N->>C: createEngineer({ uniEngineer })
+        C->>S: POST /api/engineers
+        S->>S: @Valid Bean Validation
+        S->>R: existsByEmailIgnoreCase(email)
+        R->>DB: SELECT
+        alt email already taken
+            S-->>C: 409 Problem Details (RFC 9457)
+            C-->>N: ResponseError
+            N-->>U: Error toast with detail
+        else new engineer
+            S->>R: save(engineer)
+            R->>DB: INSERT
+            S-->>C: 201 Created + JSON
+            C-->>N: typed UniEngineer
+            N->>N: revalidatePath("/engineers")
+            N-->>U: Success toast + refreshed table
+        end
+    end
